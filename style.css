@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+.navBar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1B4332;
+    color: #E9EED9;
+    padding: 10px 20px;
+}
+
+.brandName {
+    font-size: 40px;
+    font-weight: 400;
+}
+
+.navLinks {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.navBar a {
+    text-decoration: none;
+    color: #E9EED9;
+    font-size: 24px;
+}
+
+.navBar a:hover {
+    color: white;
+}
+
+.cartLink {
+    width: 142px;
+    height: 45px;
+    background-color: #FFB703;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.cartLink a {
+    color: #081C15;
+}
+
+footer {
+    background-color: #1B4332;
+    color: #E9EED9;
+    font-size: 24px;
+    font-weight: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+footer a {
+    color: #E9EED9;
+}
+
+footer a:hover {
+    color: white;
+}
