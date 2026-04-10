@@ -1,3 +1,8 @@
+html, body, div {
+    box-sizing: border-box;
+    padding: 0;
+}
+
 body {
     display: flex;
     flex-direction: column;

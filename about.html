@@ -2,8 +2,117 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="style.css">
+    <style type="text/css">
+            .banner-image {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background: url("./images/banner-about-page.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                min-height: 200px;
+                width: 100%;
+            }
+
+            .below-image {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background: url("./images/about-books.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                min-height: 200px;
+                width: 100%;
+            }
+
+            .three-columns {
+                display: grid;
+                text-align: center;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 20px;
+            }
+
+            .two-columns {
+                display: grid;
+                text-align: center;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .section {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                min-height: 100px;
+                background: #E9EED9;
+            }
+
+            img {
+                height: 40px;
+            }
+    </style>
 </head>
 <body>
-    <h3>Our about page</h3>
+    <div class="content">
+        <!-- The banner image -->
+        <div class="banner-image">
+            <h1>About</h1>
+        </div>
+
+        <!-- The Our impact section -->
+        <div class="section">
+            <h2>Our Impact</h2>
+            <div class="three-columns">
+                <div>
+                    <div>500k+</div>
+                    <div>Books saved from landfills and recirculated to readers</div>
+                </div>
+                <div>
+                    <div>70%</div>
+                    <div>Average savings compared to major book outlets</div>
+                </div>
+                <div>
+                    <div>100%</div>
+                    <div>Of our shipping materials are recycled or biodegradable</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="below-image"></div>
+
+        <!-- The Our values section -->
+        <div class="section">
+            <h2>Our Values</h2>
+            <div class="two-columns">
+                <div>
+                    <img src="images/icons8-community-50.png">
+                    <div>We believe in building a community through our network of
+                    donors and buyers.</div>
+                </div>
+                <div>
+                    <img src="images/magnifier-glass-icon.png">
+                    <div>Secondhand doesn't mean lesser quality. We inspect all
+                    donations to ensure they're ready for sale.</div>
+                </div>
+                <div>
+                    <img src="images/icons8-leaf-50.png">
+                    <div>We prioritize sustainability by promoting a circular
+                    book system and minimizing package waste.</div>
+                </div>
+                <div>
+                    <img src="images/money-icon.webp">
+                    <div>Everyone should have the ability to find affordable books,
+                    we ensure cost isn't a barrier in literacy.</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
