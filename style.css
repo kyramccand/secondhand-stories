@@ -3,6 +3,27 @@ html, body, div {
     padding: 0;
 }
 
+h1, h2 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+h3 {
+    font-size: 32px;
+}
+
+div, span, p {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 18px;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -20,12 +41,18 @@ body {
     align-items: stretch;
     background-color: #1B4332;
     color: #E9EED9;
-    /* padding: 10px 20px; */
+    padding: 10px 20px 0 20px;
 }
 
 .brandName {
+    color: #E9EED9;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     font-size: 40px;
     font-weight: 400;
+    gap: 10px;
 }
 
 .navLinks {
@@ -37,14 +64,14 @@ body {
     margin-bottom: 0;
 }
 
-.navBar a {
+.navLinks a {
     text-decoration: none;
     color: #E9EED9;
     font-size: 24px;
 }
 
-.navBar a:hover {
-    color: white;
+.navLinks a:hover {
+    color: #FFB703;
 }
 
 .allLinks {
@@ -54,21 +81,6 @@ body {
     justify-content: flex-start;
     gap: 15px;
     margin-right: 15px;
-}
-
-.cartLink {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 142px;
-    height: 45px;
-    background-color: #FFB703;
-    border-radius: 10px;
-    font-size: 24px;
-    font-weight: 400;
-    text-align: center;
-    text-decoration: none;
-    color: #081C15;
 }
 
 footer {
@@ -89,5 +101,59 @@ footer a {
 }
 
 footer a:hover {
-    color: white;
+    color: #FFB703;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100px;
+    background: #E9EED9;
+    padding: 50px;
+}
+
+.three-columns {
+    display: grid;
+    text-align: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 70%;
+    gap: 30px;
+    padding: 20px;
+}
+
+.column-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 20px;
+}
+
+.two-columns {
+    display: grid;
+    text-align: center;
+    grid-template-columns: 1fr 1fr;
+    width: 70%;
+    gap: 40px;
+    margin: 40px;
+}
+
+button {
+    background: #FFB703;
+    border-radius: 10px;
+    text-align: center;
+    color: #081C15;
+    border: none;
+    font-size: 18px;
+    width: 150px;
+    height: 50px;
+}
+
+button:hover {
+    background: #1B4332;
+    border: 2px solid #E9EED9;
+    color: #E9EED9;
 }

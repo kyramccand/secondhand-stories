@@ -8,29 +8,14 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: url("./images/banner-image.jpg");
+            background:
+            linear-gradient(to top, #E9EED9, transparent),
+            url("./images/banner-image.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            min-height: 500px;
-            color: #ffffff;
-        }
-
-        .section {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            min-height: 100px;
-            background: #E9EED9;
-        }
-
-        .three-columns {
-            display: grid;
-            text-align: center;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
+            min-height: calc(100vh - 100px);
+            color: #000000;
         }
 
         .bottom-image {
@@ -38,23 +23,44 @@
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
-            min-height: 500px;
+            min-height: 400px;
         }
 
         img {
             height: 40px;
+            width: 40px;
+        }
+
+        .slogan {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 60px;
+        }
+
+        .descriptions-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 18px;
+            gap: 20px;
+            width: 50%;
+            margin: 50px;
         }
 
     </style>
 </head>
 <body>
     <nav class="navBar">
-        <div class="brandName">
+        <a href="index.html" class="brandName">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
+            </svg>
             <h1>Secondhand Stories</h1>
-        </div>
+        </a>
     
         <div class="allLinks">
-            <a class="cartLink" href="cart.html">Cart</a>
+            <a class="cartLink" href="cart.html"><button>Cart</button></a>
             <ul class="navLinks">
                 <li><a href="about.html">About</a></li>
                 <li><a href="catalog.html">Catalog</a></li>
@@ -68,8 +74,8 @@
         <!-- Hero section -->
         <div class="hero">
             <h2>Secondhand Stories</h2>
-            <h1>OUR SLOGAN GOES HERE</h1>
-            <div>
+            <div class="slogan">Give Every Story a Second Chapter.</div>
+            <div class="descriptions-container">
                 <div>
                     Secondhand Stories recycles books from users and closing
                     libraries by purchasing them in mass or accepting donations,
@@ -91,7 +97,7 @@
         <div class="section">
             <h2>Why Choose Us?</h2>
             <div class="three-columns">
-                <div>
+                <div class="column-container">
                     <img src="images/icons8-library-50.png">
                     <div>
                         We keep books out of landfills by sourcing them from closing
@@ -99,7 +105,7 @@
                         given a second life and keeping stories in circulation.
                     </div>
                 </div>
-                <div>
+                <div class="column-container">
                     <img src="images/icons8-us-dollar-24.png">
                     <div>
                         We believe cost shouldn't be a barrier in access to
@@ -107,7 +113,7 @@
                         prices so that everyone can discover and enjoy new stories.
                     </div>
                 </div>
-                <div>
+                <div class="column-container">
                     <img src="images/icons8-books-50.png">
                     <div>
                         We accept all sorts of donations. You can offer your old
@@ -128,8 +134,8 @@
     <footer>
         <div>2026 Secondhand Stories. All rights reserved. | </div>
         <div>
-            <a href="privacyPolicy.php">Privacy Policy</a> |
-            <a href="termsOfService.php">Terms of Service</a>
+            <a href="privacyPolicy.html">Privacy Policy</a> |
+            <a href="termsOfService.html">Terms of Service</a>
         </div>
     </footer>
 </body>

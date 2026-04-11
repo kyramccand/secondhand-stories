@@ -9,10 +9,12 @@
                 justify-content: center;
                 align-items: center;
                 background: url("./images/banner-about-page.jpg");
+                background-color: #e9eed9a0;
+                background-blend-mode: lighten;
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-position: center;
-                min-height: 200px;
+                min-height: 300px;
                 width: 100%;
             }
 
@@ -29,43 +31,40 @@
                 width: 100%;
             }
 
-            .three-columns {
-                display: grid;
-                text-align: center;
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 20px;
-            }
-
-            .two-columns {
-                display: grid;
-                text-align: center;
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-
-            .section {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                min-height: 100px;
-                background: #E9EED9;
-            }
-
             img {
                 height: 40px;
+                width: 40px;
             }
+
+            .description {
+                width: 70%;
+                text-align: center;
+            }
+
+            .number {
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                font-size: 60px;
+            }
+
+            .value-container {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+            }
+
     </style>
 </head>
 <body>
     <nav class="navBar">
-        <div class="brandName">
+        <a href="index.html" class="brandName">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
+            </svg>
             <h1>Secondhand Stories</h1>
-        </div>
+        </a>
     
         <div class="allLinks">
-            <a class="cartLink" href="cart.html">Cart</a>
+            <a class="cartLink" href="cart.html"><button>Cart</button></a>
             <ul class="navLinks">
                 <li><a href="about.html">About</a></li>
                 <li><a href="catalog.html">Catalog</a></li>
@@ -79,22 +78,28 @@
         <!-- The banner image -->
         <div class="banner-image">
             <h1>About</h1>
+            <div class="description">
+                Secondhand Stories is a community-driven company that believes
+                everyone should have access to affordable books. Every book sold
+                is a book to support global literacy and keep books out of
+                landfills.
+            </div>
         </div>
 
         <!-- The Our impact section -->
         <div class="section">
             <h2>Our Impact</h2>
             <div class="three-columns">
-                <div>
-                    <div>500k+</div>
+                <div class="column-container">
+                    <div class="number">500k+</div>
                     <div>Books saved from landfills and recirculated to readers</div>
                 </div>
-                <div>
-                    <div>70%</div>
+                <div class="column-container">
+                    <div class="number">70%</div>
                     <div>Average savings compared to major book outlets</div>
                 </div>
-                <div>
-                    <div>100%</div>
+                <div class="column-container">
+                    <div class="number">100%</div>
                     <div>Of our shipping materials are recycled or biodegradable</div>
                 </div>
             </div>
@@ -107,22 +112,22 @@
         <div class="section">
             <h2>Our Values</h2>
             <div class="two-columns">
-                <div>
+                <div class="value-container">
                     <img src="images/icons8-community-50.png">
                     <div>We believe in building a community through our network of
                     donors and buyers.</div>
                 </div>
-                <div>
+                <div class="value-container">
                     <img src="images/magnifier-glass-icon.png">
                     <div>Secondhand doesn't mean lesser quality. We inspect all
                     donations to ensure they're ready for sale.</div>
                 </div>
-                <div>
+                <div class="value-container">
                     <img src="images/icons8-leaf-50.png">
                     <div>We prioritize sustainability by promoting a circular
                     book system and minimizing package waste.</div>
                 </div>
-                <div>
+                <div class="value-container">
                     <img src="images/money-icon.webp">
                     <div>Everyone should have the ability to find affordable books,
                     we ensure cost isn't a barrier in literacy.</div>
@@ -134,8 +139,8 @@
      <footer>
         <div>2026 Secondhand Stories. All rights reserved. | </div>
         <div>
-            <a href="privacyPolicy.php">Privacy Policy</a> |
-            <a href="termsOfService.php">Terms of Service</a>
+            <a href="privacyPolicy.html">Privacy Policy</a> |
+            <a href="termsOfService.html">Terms of Service</a>
         </div>
     </footer>
 </body>
