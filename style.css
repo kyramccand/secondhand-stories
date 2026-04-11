@@ -43,9 +43,14 @@ body {
     color: white;
 }
 
+.allLinks {
+    
+}
+
 .cartLink {
-    width: 142px;
-    height: 45px;
+    display: inline-block;
+    width: 250px;
+    height: 100px;
     background-color: #FFB703;
     border-radius: 10px;
     font-size: 24px;
