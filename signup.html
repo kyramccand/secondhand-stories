@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Sign Up</title>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navBar">
+        <!-- Logo and brand name -->
+        <a href="index.html" class="brandName">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
+            </svg>
+            <h1>Secondhand Stories</h1>
+        </a>
+
+        <!-- Actual navigation -->
+        <div class="allLinks">
+            <a class="cartLink" href="cart.html"><button>Cart</button></a>
+            <ul class="navLinks">
+                <li><a href="about.html">About</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="donate.html">Donate</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End of navigation bar -->
+
+    <div class="content">
+        <div class="page-center-container">
+            <!-- White background with rounded corners -->
+            <div class="form-container">
+                <h1>Sign Up</h1>
+                <!-- Link to the log in page -->
+                <p>Already have an account? <a href="login.html">Log in</a></p>
+                <form method="get" action="login.html">
+                    <label for="first">First Name</label>
+                    <input name="first" type="text">
+                    <label for="first">Last Name</label>
+                    <input name="last" type="text">
+                    <label for="email">Email</label>
+                    <input name="email" type="email">
+                    <label for="password">Password</label>
+                    <input name="password" type="password">
+                    <!-- Sign up submit button -->
+                    <input type="submit" value="Sign up">
+                </form>
+                <!-- End of form -->
+            </div>
+            <!-- End of form container -->
+        </div>
+        <!-- End of centered page -->
+    </div>
+    <!-- End of content -->
+
+    <!-- Footer with privacy policy and terms of service -->
+    <footer>
+        <div>2026 Secondhand Stories. All rights reserved. | </div>
+        <div>
+            <a href="privacyPolicy.html">Privacy Policy</a> |
+            <a href="termsOfService.html">Terms of Service</a>
+        </div>
+    </footer>
+</body>
+</html>
