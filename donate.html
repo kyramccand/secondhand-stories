@@ -1,17 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Donate</title>
     <link rel="stylesheet" href="style.css">
+    <style type="text/css">
+        .autofill {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            background-color: #1B4332;
+            border-radius: 10px;
+            height: 200px;
+            width: 80%;
+            padding: 30px;
+        }
+
+        .autofill form {
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .autofill form label {
+            color: #E9EED9;
+        }
+
+        .autofill input {
+            width: 100%;
+        }
+
+        .autofill input[type="submit"] {
+            width: 40px;
+            height: 40px;
+            border-radius: 100px;
+            margin-bottom: 0;
+            background-image: url("./images/magnifier-glass-icon.png");
+            background-size: 20px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .field-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation bar -->
     <nav class="navBar">
+        <!-- Logo and brand name -->
         <a href="index.html" class="brandName">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
             </svg>
             <h1>Secondhand Stories</h1>
         </a>
-    
+
+        <!-- Actual navigation -->
         <div class="allLinks">
             <a class="cartLink" href="cart.html"><button>Cart</button></a>
             <ul class="navLinks">
@@ -22,9 +71,31 @@
             </ul>
         </div>
     </nav>
+    <!-- End of navigation bar -->
 
     <div class="content">
-        
+        <div class="page-center-container">
+            <h1>Donate</h1>
+            <div class="form-container">
+                    <h2>Book Details</h2>
+                    <div class="autofill">
+                        <form>
+                            <div class="field-container">
+                                <label for="isbn">ISBN</label>
+                                <input name="isbn">
+                            </div>
+                            <input type="submit" value="">
+                        </form>
+                    </div>
+                <form>
+                    <label for="title">Title</label>
+                    <input name="title" type="text">
+                    <label for="author">Author</label>
+                    <input name="author" type="text">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
     </div>
 
      <footer>
