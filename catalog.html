@@ -2,8 +2,160 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .header h1 {
+            font-size: 42px;
+            font-weight: 900;
+            color: #000000;
+            margin-bottom: 12px;
+        }
+        .header p {
+            font-size: 15px;
+            color: #000000;
+            max-width: 540px;
+            margin: 0 auto;
+            
+        }
+        .search-bar {
+            background: #1B4332;
+            border-radius: 16px;
+            padding: 28px 32px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 40px;
+            width: 100%;
+            height: auto;
+        }
+        .search-title {
+            flex: 1;
+        }
+        .search-bar label {
+            color: #ffffff;
+        }
+        .search-title,
+        .search-author,
+        .search-genre,
+        .search-year {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+        .search-btn {
+            width: 44px;
+            height: 44px;
+            background-color: #FFB703;
+            background-image: url("./images/magnifier-glass-icon.png");
+            background-size: 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: none;
+            border-radius: 50%;
+            margin-bottom: 2px;
+            margin-top: 20px;
+            
+        }
+        .search-btn:hover {
+            background: #f5b002;
+            
+            background-image: url("./images/magnifier-glass-icon.png");
+            background-size: 60%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .search-bar input {
+            border-radius: 7px;
+            background: #ffffff;
+            width: 100%;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .book-card {
+            background: #FFFFFF;
+            border-radius: 18px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;  
+            
+        }
+        
+        .book-cover {
+            background: #D9D9D9;
+            border-radius: 10px;
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            display: block;
+        }
+        .book-info { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 4px; 
+        }
+        .book-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a2e1a;
+            line-height: 1.25;
+            margin-bottom: 6px;
+        }
+        .book-meta {
+            font-size: 13px;
+            color: #1B4332;
+            line-height: 1.6;
+        }
+        .book-meta strong { 
+            color: #1a2e1a; 
+        }
+        .details-btn {
+            background: #FFB703;
+            color: #1a2e1a;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            width: fit-content;
+            align-self: center;
+            
+        }
+        .wrap {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        @media (max-width: 768px) {
+            .catalog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .catalog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <nav class="navBar">
         <a href="index.html" class="brandName">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
@@ -23,11 +175,116 @@
         </div>
     </nav>
 
-    <div class="content">
-        
+    <div class="wrap">
+        <div class="header">
+            <h1>Catalog</h1>
+            <p>Browse our collection of affordable, secondhand books. 
+                Each book was donated from a user or sourced from a closing 
+                library. Find your next read and give a book a new home.</p>
+        </div>
+
+        <div class="search-bar">
+            <div class="search-title">
+                <label>Title</label>
+                <input type="text">
+            </div>
+            <div class="search-author">
+                <label>Author</label>
+                <input type="text">
+            </div>
+            <div class="search-genre">
+                <label>Genre</label>
+                <input type="text">
+            </div>
+            <div class="search-year">
+                <label>Year</label>
+                <input type="text">
+            </div>
+            <button class="search-btn"></button>
+        </div>
+
+        <div class="catalog-grid">
+            <div class="book-card">
+                <img class="book-cover" id="cover-mockingbird">
+                <div class="book-info">
+                    <div class="book-title">To Kill a Mockingbird</div>
+                    <div class="book-meta">
+                        <strong>Author</strong>: Harper Lee<br>
+                        <strong>Published</strong>: 1960<br>
+                        <strong>Genre</strong>: History, Fiction
+                    </div>
+                </div>
+                <button class="details-btn">See details</button>
+            </div>
+
+            <div class="book-card">
+                <img class="book-cover" id="cover-overcoat">
+                <div class="book-info">
+                    <div class="book-title">The Overcoat</div>
+                    <div class="book-meta">
+                        <strong>Author</strong>: Nikolai Gogol<br>
+                        <strong>Published</strong>: 1842<br>
+                        <strong>Genre</strong>: Classics, Fiction
+                    </div>
+                </div>
+                <button class="details-btn">See details</button>
+            </div>
+
+            <div class="book-card">
+                <img class="book-cover" id="cover-homegoing">
+                <div class="book-info">
+                    <div class="book-title">Homegoing</div>
+                    <div class="book-meta">
+                        <strong>Author</strong>: Yaa Gyasi<br>
+                        <strong>Published</strong>: 2016<br>
+                        <strong>Genre</strong>: Historical Fiction
+                    </div>
+                </div>
+                <button class="details-btn">See details</button>
+            </div>
+
+            <div class="book-card">
+                <img class="book-cover" id="cover-sisyphus">
+                <div class="book-info">
+                    <div class="book-title">The Myth of Sisyphus</div>
+                    <div class="book-meta">
+                        <strong>Author</strong>: Albert Camus<br>
+                        <strong>Published</strong>: 1942<br>
+                        <strong>Genre</strong>: Philosophy, Classics
+                    </div>
+                </div>
+                <button class="details-btn">See details</button>
+            </div>
+
+            <div class="book-card">
+                <img class="book-cover" id="cover-scythe">
+                <div class="book-info">
+                    <div class="book-title">Scythe</div>
+                    <div class="book-meta">
+                        <strong>Author</strong>: Neal Shusterman<br>
+                        <strong>Published</strong>: 2016<br>
+                        <strong>Genre</strong>: Fantasy, Young Adult
+                    </div>
+                </div>
+                <button class="details-btn">See details</button>
+            </div>
+
+            <div class="book-card">
+                <img class="book-cover" id="cover-circe">
+                <div class="book-info">
+                    <div class="book-title">Circe</div>
+                    <div class="book-meta">
+                        <strong>Author</strong>: Madeline Miller<br>
+                        <strong>Published</strong>: 2018<br>
+                        <strong>Genre</strong>: Fantasy, Mythology
+                    </div>
+                </div>
+                <button class="details-btn">See details</button>
+            </div>
+        </div>
     </div>
     
-     <footer>
+    <footer>
         <div>2026 Secondhand Stories. All rights reserved. | </div>
         <div>
             <a href="privacyPolicy.html">Privacy Policy</a> |
@@ -35,4 +292,43 @@
         </div>
     </footer>
 </body>
+<script>
+    function loadCovers() {
+        const books = [
+        { isbn: "9780446310789", imgId: "cover-mockingbird" },
+        { isbn: "9781473322288", imgId: "cover-overcoat" },
+        { isbn: "9781101971062", imgId: "cover-homegoing" },
+        { isbn: "9780679720201", imgId: "cover-sisyphus" },
+        { isbn: "9781442472433", imgId: "cover-scythe" },
+        { isbn: "9780316556347", imgId: "cover-circe" },
+        ];
+
+        books.forEach((book, index) => {
+        setTimeout(() => {
+            const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}&key=AIzaSyDJV8TYoGmFA0aNY2wQ-NVyMIiTtIhjMiQ`;
+
+            fetch(url)
+            .then(res => res.text())
+            .then(response => {
+                data = JSON.parse(response);
+                console.log(data);
+
+                if (data != null) {
+                    const thumbnail = data["items"]["0"].volumeInfo.imageLinks?.thumbnail;
+                    if (thumbnail) {
+                        document.getElementById(book.imgId).src = thumbnail;
+                    }
+                }
+                else {
+                    console.log("No results for ISBN:", book.isbn);
+                }
+            })
+            .catch(error => console.log(error));
+
+        });
+    });
+}
+
+    loadCovers();
+</script>
 </html>
