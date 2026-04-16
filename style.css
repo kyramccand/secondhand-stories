@@ -205,3 +205,17 @@ input {
     padding: 5px;
 }
 
+@media (max-width: 768px) {
+
+    .three-columns {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+
+    .two-columns {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+
+}
+

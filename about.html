@@ -17,6 +17,7 @@
                     background-position: center;
                     min-height: 300px;
                     width: 100%;
+                    padding-bottom: 50px;
                 }
 
                 .below-image {
@@ -51,6 +52,19 @@
                     display: flex;
                     flex-direction: row;
                     gap: 20px;
+                }
+
+                @media (max-width: 768px) {
+
+                    .value-container {
+                        flex-direction: column;
+                    }
+
+                    .value-container img {
+                        display: block;
+                        margin: 0 auto;
+                    }
+
                 }
 
         </style>
