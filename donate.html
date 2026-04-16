@@ -9,6 +9,7 @@
             flex-direction: column;
             align-items: start;
             background-color: #1B4332;
+            color: #E9EED9;
             border-radius: 10px;
             width: 80%;
             padding: 30px;
@@ -63,6 +64,11 @@
             text-align: center;
         }
 
+        .form-container label {
+            display: block;
+            text-align: left;
+        }
+
     </style>
 </head>
 <body>
@@ -97,12 +103,22 @@
                 details manually or use our built in ISBN autofill feature to
                 save time.</p>
             <div class="form-container">
+                <form>
+                    <h2>Personal Information</h2>
+                    <label for="firstName">First Name</label>
+                    <input id="firstName-input" name="firstName" type="text" required>
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName-input" name="lastName" type="text" required>
+                    <label for="honorifics">Honorifics</label>
+                    <input id="honorifics-input" name="honorifics" type="text">
                     <h2>Book Details</h2>
                     <!-- Autofill form container-->
                     <div class="autofill">
                         <h3>Autofill</h3>
                         <form onsubmit="loadBookDetails(event); return false;">
                             <div class="field-container">
+                                <label for="title">Title</label>
+                                <input id="isbn-input" name="isbn" type="number">
                                 <label for="isbn">ISBN</label>
                                 <input id="isbn-input" name="isbn" type="number">
                             </div>
@@ -111,11 +127,13 @@
                         </form>
                     </div>
                     <!-- End of autofill container -->
-                <form>
+                <!--prev form tag-->
                     <label for="title">Title</label>
                     <input id="title-input" name="title" type="text">
                     <label for="author">Author</label>
                     <input id="author-input" name="author" type="text">
+                    <label for="genre">Genre</label>
+                    <input id="genre-input" name="genre" type="text">
                     <input type="submit" value="Submit">
                 </form>
                 <div id="result"></div>
@@ -127,7 +145,7 @@
     <!-- End of content -->
 
      <footer>
-        <div>2026 Secondhand Stories. All rights reserved. | </div>
+        <div>&copy; 2026 Secondhand Stories. All rights reserved. | </div>
         <div>
             <a href="privacyPolicy.html">Privacy Policy</a> |
             <a href="termsOfService.html">Terms of Service</a>
