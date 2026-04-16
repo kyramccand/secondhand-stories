@@ -17,6 +17,7 @@
                 background-position: center;
                 min-height: calc(100vh - 100px);
                 color: #000000;
+                text-align: center;
             }
 
             .bottom-image {
@@ -35,6 +36,7 @@
             .slogan {
                 font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
                 font-size: 60px;
+                text-align: center;
             }
 
             .descriptions-container {
@@ -47,6 +49,23 @@
                 gap: 20px;
                 width: 50%;
                 margin: 50px;
+            }
+
+            .call-to-action {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+            }
+
+            @media (max-width: 768px) {
+                
+                .descriptions-container {
+                    width: 80%;
+                }
+
+                .slogan {
+                    width: 80%;
+                }
             }
 
         </style>
@@ -94,7 +113,7 @@
                     </div>
                 </div>
                 <!-- Call to action: buttons linking to other pages -->
-                <div>
+                <div class="call-to-action">
                     <a href="./about.html"><button>Learn More</button></a>
                     <a href="./donate.html"><button>Donate Now</button></a>
                 </div>
