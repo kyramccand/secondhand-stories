@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Secondhand Stories</title>
+        <link rel="stylesheet" href="style.css">
+        <style type="text/css">
+            .hero {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background:
+                linear-gradient(to top, #E9EED9, transparent),
+                url("./images/banner-image.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                min-height: calc(100vh - 100px);
+                color: #000000;
+                text-align: center;
+            }
+
+            .bottom-image {
+                background: url("./images/main-page-books.jpg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+                min-height: 400px;
+            }
+
+            img {
+                height: 40px;
+                width: 40px;
+            }
+
+            .slogan {
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                font-size: 60px;
+                text-align: center;
+            }
+
+            .descriptions-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-size: 18px;
+                gap: 20px;
+                width: 50%;
+                margin: 50px;
+            }
+
+            .call-to-action {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+            }
+
+            @media (max-width: 768px) {
+                
+                .descriptions-container {
+                    width: 80%;
+                }
+
+                .slogan {
+                    width: 80%;
+                }
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <!-- Navigation bar -->
+        <nav class="navBar">
+            <!-- Logo and brand name -->
+            <a href="home" class="brandName">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
+                </svg>
+                <h1>Secondhand Stories</h1>
+            </a>
+
+            <!-- Actual navigation -->
+            <div class="allLinks">
+                <a class="cartLink" href="cart"><button>Cart</button></a>
+                <ul class="navLinks">
+                    <li><a href="about">About</a></li>
+                    <li><a href="catalog">Catalog</a></li>
+                    <li><a href="donate">Donate</a></li>
+                    <li><a href="leaderboard">Leaderboard</a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- End of navigation bar -->
+
+        <div class="content">
+            <!-- Hero section -->
+            <div class="hero">
+                <h2>Secondhand Stories</h2>
+                <div class="slogan">Give Every Story a Second Chapter.</div>
+                <div class="descriptions-container">
+                    <div>
+                        Secondhand Stories recycles books from users and closing
+                        libraries by purchasing them in mass or accepting donations,
+                        then reselling them at very low costs. 
+                    </div>
+                    <div>
+                        As libraries close and communities lose access to books, our
+                        goal as a company is to combat this by keeping books in
+                        circulation and ensuring reading remains accessible.
+                    </div>
+                </div>
+                <!-- Call to action: buttons linking to other pages -->
+                <div class="call-to-action">
+                    <a href="./about"><button>Learn More</button></a>
+                    <a href="./donate"><button>Donate Now</button></a>
+                </div>
+            </div>
+            <!-- End of hero -->
+
+            <!-- Why choose us section -->
+            <div class="section">
+                <h2>Why Choose Us?</h2>
+                <!-- Organize information in 3 columns -->
+                <div class="three-columns">
+                    <div class="column-container">
+                        <img src="images/icons8-library-50.png">
+                        <div>
+                            We keep books out of landfills by sourcing them from closing
+                            libraries and community donations. This allows book to be
+                            given a second life and keeping stories in circulation.
+                        </div>
+                    </div>
+                    <!-- End of columnn -->
+                    <div class="column-container">
+                        <img src="images/icons8-us-dollar-24.png">
+                        <div>
+                            We believe cost shouldn't be a barrier in access to
+                            reading or books. So, we offer our books at affordable
+                            prices so that everyone can discover and enjoy new stories.
+                        </div>
+                    </div>
+                    <!-- End of column -->
+                    <div class="column-container">
+                        <img src="images/icons8-books-50.png">
+                        <div>
+                            We accept all sorts of donations. You can offer your old
+                            unused books or books you discovered through us. Then,
+                            you can earn credit towards your next read from Secondhand
+                            Stories.
+                        </div>
+                    </div>
+                    <!-- End of column -->
+                </div>
+                <!-- End of column container -->
+            </div>
+            <!-- End of Why Choose Us section -->
+
+            <!-- bottom image -->
+            <div class="bottom-image">
+            </div>
+        </div>
+        <!-- End of content -->
+
+        <!-- Footer with links to privacy policy and terms of service -->
+        <footer>
+            <div>&copy; 2026 Secondhand Stories. All rights reserved. | </div>
+            <div>
+                <a href="privacy-policy">Privacy Policy</a> |
+                <a href="terms-of-service">Terms of Service</a>
+            </div>
+        </footer>
+    </body>
+</html>
