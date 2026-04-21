@@ -87,6 +87,7 @@ body {
 }
 
 footer {
+    width: 100%;
     background-color: #1B4332;
     color: #E9EED9;
     font-size: 24px;
@@ -101,6 +102,7 @@ footer {
 
 footer a {
     color: #E9EED9;
+    text-decoration: underline;
 }
 
 footer a:hover {
@@ -166,6 +168,124 @@ button:hover, input[type="submit"]:hover {
     color: #E9EED9;
 }
 
+
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+  }
+
+  .nav-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  /* Hamburger menu shows up on mobile or any small screen */
+  .nav-links.hamburger {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 0px;
+    top: 100%;
+    left: 0px;
+    z-index: 999;
+    background: #1B4332;
+  }
+
+  .circle {
+    display: flex;
+  }
+
+  #toggleBar {
+    display: block;
+    cursor: pointer;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .columns {
+    flex-direction: column;
+  }
+
+  .container h1 {
+    width: 100%;
+  }
+
+  .container p {
+    width: 100%;
+  }
+
+
+  .dropdownOptions {
+    display: none;
+  }
+
+  .dropdownOptions {
+    position: static;
+    box-shadow: none;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .dropdownOptions.open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  h1 {
+  font-size: 32px !important;
+  }
+
+  h2 {
+    font-size: 24px !important;
+  }
+
+  h3 {
+    font-size: 20px !important;
+  }
+
+  p {
+    font-size: 14px !important;
+  }
+
+}
+
+@media (min-width: 769px) {
+  .nav-links {
+    display: flex;
+  }
+
+  #toggleBar {
+    display: none;
+  }
+
+  .circle {
+    display: none;
+  }
+
+  .dropdown:hover .dropdownOptions {
+    display: flex;
+    flex-direction: column;
+    background-color: #1B4332;
+    width: 120px;
+    padding: 10px 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+  }
+}
 .page-center-container {
     display: flex;
     flex-direction: column;

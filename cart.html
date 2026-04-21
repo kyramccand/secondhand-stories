@@ -1,7 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+<html>
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="secondhand books, affordable books, book donations, global literacy, sustainability" />
+    <meta name="description" content="View your shopping cart and manage your selected books." />
+    <title>Cart</title>
     <link rel="stylesheet" href="style.css">
+  <style>
+
+    .cart-page {
+            background: #E9EED9;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 60px;
+        }
+
+    .cart-subtitle {
+        font-family: 'Trebuchet MS', Arial, sans-serif;
+        font-size: 16px;
+        color: #1B4332;
+        text-align: center;
+        margin: 0 0 36px;
+    }
+ 
+    .order-summary-card {
+            background: #ffffff;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 580px;
+            padding: 40px 50px 50px;
+        }
+
+    .order-summary-card h3 {
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 28px;
+        color: #081C15;
+        text-align: center;
+        margin: 0 0 32px;
+        font-weight: 400;
+    }
+
+    .order-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 0;
+        }
+ 
+        .order-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            font-size: 16px;
+            color: #1B4332;
+            padding: 10px 0;
+        }
+ 
+        .order-divider {
+            border: none;
+            border-top: 1px solid #c8d5bc;
+            margin: 8px 0;
+        }
+ 
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #081C15;
+            padding: 12px 0 0;
+        }
+ 
+        .confirm-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 48px;
+        }
+ 
+        .confirm-btn-wrapper button {
+            width: 160px;
+            height: 48px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+ 
+        @media (max-width: 768px) {
+            .order-summary-card { padding: 28px 24px 36px; }
+        }
+          
+  </style>
 </head>
 <body>
     <nav class="navBar">
@@ -24,7 +119,41 @@
     </nav>
 
     <div class="content">
-      
+        <div class="cart-page">
+            <h2>Cart</h2>
+            <div class="cart-subtitle">
+                Finalizing your collection...you’re just a few clicks away from owning these books!
+            </div>
+
+            <div class="order-summary-card">
+                <h3>Order Summary</h3>
+
+            <div class="order-lines">
+                <div class="order-line">
+                    <span>Subtotal:</span>
+                    <span>$XX.XX</span>
+                </div>
+                <div class="order-line">
+                    <span>Volume Discount ():</span>
+                    <span>$XX.XX</span>
+                </div>
+                <div class="order-line">
+                    <span>Donation Credits ():</span>
+                    <span>$XX.XX</span>
+                </div>
+                <div class="order-line">
+                    <span>Tax (6.25%):</span>
+                    <span>$XX.XX</span>
+                </div>
+            </div>
+            <hr class="order-divider" />
+            
+
+            <div class=" confirm-btn-wrapper">
+                <a href="index.html"><button>Checkout</button></a> 
+                <!-- just for now --></div>
+            
+        </div>
     </div>
 
     <footer>
