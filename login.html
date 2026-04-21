@@ -34,8 +34,8 @@
             <div class="form-container">
                 <h1>Login</h1>
                 <!-- Link to the sign up page -->
-                <p>Don't have an account yet? <a href="signup.html">Sign up</a></p>
-                <form method="get" action="index.html">
+                <p>Don't have an account yet? <a href="signup">Sign up</a></p>
+                <form method="POST" action="process-login">
                     <label for="email">Email</label>
                     <input name="email" type="email">
                     <label for="password">Password</label>
@@ -60,4 +60,10 @@
         </div>
     </footer>
 </body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('error')) {
+        alert("Incorrect username or password");
+    }
+</script>
 </html>

@@ -1,11 +1,12 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
+const querystring = require('querystring');
 // var port = process.env.PORT || 3000;
 var port = 8080;   // uncomment to run local
 
 const MongoClient = require('mongodb').MongoClient;
-const connStr = "mongodb+srv://database_user:db123@stock.zrcipph.mongodb.net/?appName=SecondhandStories";
+const connStr = "mongodb+srv://login_user:db123@leaderboard.gw09mzd.mongodb.net/?appName=leaderboard";
 
 
 console.log("Server ready");
@@ -15,9 +16,10 @@ var server = http.createServer(function (req, res) {
     
     // Parse the url to get the form inputs
     urlObj = url.parse(req.url, true);
+    var path = urlObj.pathname;
 
     // Load the home page
-    if (req.url == "/home") {
+    if (path == "/home") {
         fs.readFile("home.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -30,7 +32,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // Load the home page
-    else if (req.url == "/login") {
+    else if (path == "/login") {
         fs.readFile("login.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -42,8 +44,54 @@ var server = http.createServer(function (req, res) {
             res.end();
         });
     }
+    else if (path == "/process-login" && req.method == 'POST') {
+        
+        let body = "";
+
+        // Collect the data chunks
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        // Once all data is received
+        req.on('end', async () => {
+            const formData = querystring.parse(body);
+            const email = formData.email;
+            const pass = formData.password;
+
+            const client = new MongoClient(connStr);
+
+            try {
+                await client.connect();
+                // Go to the database
+                const db = client.db("secondhand-db");
+                // Go to the users collection
+                const collection = db.collection("users");
+
+                // Search for the user
+                const matchingUser = await collection.findOne({ "email": email, "password": pass });
+                console.log(JSON.stringify(matchingUser));
+
+                if (matchingUser) {
+                    // Success! Redirect to home or show success
+                    res.writeHead(302, { 'Location': '/home' });
+                    res.end();
+                } else {
+                    // Failure
+                    res.writeHead(302, { 'Location': '/login?error=true' });
+                    res.end();
+                }
+            } catch (err) {
+                res.writeHead(500);
+                res.end("Database Error: " + err.message);
+            } finally {
+                await client.close();
+            }
+        });
+        return;
+    }
     // Load the home page
-    else if (req.url == "/signup") {
+    else if (path == "/signup") {
         fs.readFile("signup.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -56,7 +104,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // Load the home page
-    else if (req.url == "/cart") {
+    else if (path == "/cart") {
         fs.readFile("cart.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -69,7 +117,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // Load the home page
-    else if (req.url == "/catalog") {
+    else if (path == "/catalog") {
         fs.readFile("catalog.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -82,7 +130,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // Load the home page
-    else if (req.url == "/donate") {
+    else if (path == "/donate") {
         fs.readFile("donate.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -95,7 +143,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // Load the home page
-    else if (req.url == "/about") {
+    else if (path == "/about") {
         fs.readFile("about.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -108,7 +156,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // Load the home page
-    else if (req.url == "/privacy-policy") {
+    else if (path == "/privacy-policy") {
         fs.readFile("privacyPolicy.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -121,7 +169,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // Load the home page
-    else if (req.url == "/terms-of-service") {
+    else if (path == "/terms-of-service") {
         fs.readFile("termsOfService.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -134,7 +182,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // Load the home page
-    else if (req.url == "/leaderboard") {
+    else if (path == "/leaderboard") {
         fs.readFile("leaderboard.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
@@ -147,7 +195,7 @@ var server = http.createServer(function (req, res) {
         });
     }
     // For loading my styles!
-    else if (urlObj.pathname == "/style.css") {
+    else if (path == "/style.css") {
         fs.readFile("style.css", function(err, txt) {
             if (err) {
                 res.writeHead(404);
@@ -160,9 +208,9 @@ var server = http.createServer(function (req, res) {
     } // End of style loading
 
     // For loading images
-    else if (urlObj.pathname.match(/\.(jpg|jpeg|png|gif)$/)) {
+    else if (path.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
         // Determine the file path (assumes images are in the same folder as the script)
-        var imagePath = "." + urlObj.pathname; 
+        var imagePath = "." + path; 
         
         fs.readFile(imagePath, function(err, data) {
             if (err) {
@@ -170,7 +218,7 @@ var server = http.createServer(function (req, res) {
                 res.end("Image not found");
             } else {
                 // Get the extension to set the right header
-                var ext = urlObj.pathname.split('.').pop();
+                var ext = path.split('.').pop();
                 res.writeHead(200, {'Content-Type': 'image/' + ext});
                 res.end(data);
             }
