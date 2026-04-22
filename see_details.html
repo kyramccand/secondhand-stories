@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+<style>
+        
+.card-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px 20px;
+}
+
+
+.book-card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    max-width: 650px;
+    box-sizing: border-box;
+}
+
+.card-header h1 {
+    text-align: center;
+    margin-top: 0;
+    font-weight: 500;
+}
+
+
+.card-body {
+    display: flex;
+    gap: 25px;
+    margin: 20px 0;
+}
+
+
+.book-image-placeholder {
+    width: 240px;
+    height: 300px;
+    background-color: #dcdcdc;
+    flex-shrink: 0; 
+}
+
+
+.book-info p {
+    margin: 12px 0;
+    font-size: 1.1rem;
+    color: #000;
+}
+
+
+.card-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.cart-btn {
+    background-color: #f4be52; 
+    border: none;
+    padding: 10px 40px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <nav class="navBar">
+        <a href="index.html" class="brandName">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
+            </svg>
+            <h1>Secondhand Stories</h1>
+        </a>
+    
+        <div class="allLinks">
+            <a class="cartLink" href="cart.html"><button>Cart</button></a>
+            <ul class="navLinks">
+                <li><a href="about.html">About</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="donate.html">Donate</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="card-container">
+    <div class="book-card">
+        
+        <div class="card-header">
+            <h1>Book Details</h1>
+        </div>
+
+        <div class="card-body">
+            <img id="book-cover" class="book-image-placeholder" src="" alt="Book Cover">
+
+            <div class="book-info">
+                <p><strong>Title:</strong> <span id="info-title">Loading...</span></p>
+                <p><strong>Author:</strong> <span id="info-author">...</span></p>
+                <!--<p><strong>Publisher:</strong> Harper Lee</p>!-->
+                <p><strong>Date:</strong> <span id="info-date">...</span></p>
+                <p><strong>Genre:</strong> <span id="info-genre">...</span></p>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button class="cart-btn">Add to Cart</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+    <footer>
+        <div>2026 Secondhand Stories. All rights reserved. | </div>
+        <div>
+            <a href="privacyPolicy.html">Privacy Policy</a> |
+            <a href="termsOfService.html">Terms of Service</a>
+        </div>
+    </footer>
+    <script>
+        function loadBookDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const bookId = params.get("id");
+
+            if (!bookId) {
+                document.getElementById("info-title").innerText = "No book selected.";
+                return;
+            }
+
+            const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
+            
+
+            fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                const info = data.volumeInfo;
+
+                document.getElementById("info-title").innerText = info.title || "Unknown";
+
+                let author = "Unknown";
+                if (info.authors) author = info.authors[0];
+                document.getElementById("info-author").innerText = author;
+
+                let date = "Unknown";
+                if (info.publishedDate) date = info.publishedDate.substring(0, 4);
+                document.getElementById("info-date").innerText = date;
+
+                let genre = "Unknown";
+                if (info.categories) genre = info.categories[0];
+                document.getElementById("info-genre").innerText = genre;
+
+                let cover = "";
+                if (info.imageLinks) cover = info.imageLinks.thumbnail;
+                document.getElementById("book-cover").src = cover;
+            })
+            .catch(error => console.log(error));
+        }
+
+        loadBookDetails();
+
+    </script>
+</body>
+</html>
