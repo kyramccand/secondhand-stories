@@ -145,7 +145,7 @@ var server = http.createServer(function (req, res) {
                 const existingAccount = await collection.find({"email": newUser.email});
 
                 // Check for an existing account
-                if (existingAccount) {
+                if (existingAccount && existingAccount["totalItems"] > 0) {
                     res.writeHead(302, { 'Location': '/signup?error=true' });
                     res.end();
                 }
@@ -330,54 +330,42 @@ var server = http.createServer(function (req, res) {
                     // Insert the new book
                     const result = await collection.insertOne(newBook);
 
+                    try {
+                        // Go to this database
+                        const usersDb = client.db("secondhand-db");
+                        // Go to this collection
+                        const usersCollection = usersDb.collection("users");
+                        const existingAccount = await usersCollection.findOne({"email": userInfo.email});
+
+                        // Check for an existing account
+                        if (existingAccount) {
+                            currDonations = existingAccount.donations;
+                            currDonations += 1;
+                            const result = await usersCollection.updateOne({ email: userInfo.email }, { $set: {donations: currDonations}});
+                        }
+                        else {
+                            res.writeHead(302, { 'Location': '/login?error=true' });
+                            return res.end();
+                        }
+                    }
+                    // Catch any errors that come up
+                    catch (err) {
+                        res.writeHead(500);
+                        return res.end("Database Error: " + err.message);
+                    }
+
                     // Redirect to login page
                     res.writeHead(302, { 'Location': '/home' });
-                    res.end();
+                    return res.end();
                 }
                 // Catch any errors that come up
                 catch (err) {
                     res.writeHead(500);
-                    res.end("Database Error: " + err.message);
+                    return res.end("Database Error: " + err.message);
                 }
                 finally {
                     await client.close();
                 }
-            }
-        });
-
-        // Add the donation to the users profile
-        req.on('end', async () => {
-            
-            // Connect to MongoDB
-            const client = new MongoClient(connStr);
-            
-            try {
-                await client.connect();
-                // Go to this database
-                const db = client.db("secondhand-db");
-                // Go to this collection
-                const collection = db.collection("users");
-                const existingAccount = await collection.findOne({"email": userInfo.email});
-
-                // Check for an existing account
-                if (existingAccount) {
-                    currDonations = existingAccount.donations;
-                    currDonations += 1;
-                    const result = await collection.updateOne({ email: userInfo.email }, { $set: {donations: currDonations}});
-                }
-
-                else {
-                    res.writeHead(302, { 'Location': '/login?error=true' });
-                    res.end();
-                }
-            }
-            // Catch any errors that come up
-            catch (err) {
-                res.writeHead(500);
-                res.end("Database Error: " + err.message);
-            }
-            finally {
-                await client.close();
             }
         });
         return;
