@@ -103,6 +103,64 @@ var server = http.createServer(function (req, res) {
             res.end();
         });
     }
+
+    else if (path == "/process-signup" && req.method == 'POST') {
+        let body = "";
+        // Collect the data
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        
+        req.on('end', async () => {
+            // Get the form data
+            const formData = querystring.parse(body);
+            // Create a new user
+            const newUser = {
+                "firstName": formData.first,
+                "lastName": formData.last,
+                "email": formData.email,
+                "password": formData.password,
+                "donations": 0 // New users have 0 donations
+            }
+            // Connect to MongoDB
+            const client = new MongoClient(connStr);
+            
+            try {
+                await client.connect();
+                // Go to this database
+                const db = client.db("secondhand-db");
+                // Go to this collection
+                const collection = db.collection("users");
+
+                const existingAccount = await collection.find({"email": newUser.email});
+
+                // Check for an existing account
+                if (existingAccount) {
+                    res.writeHead(302, { 'Location': '/signup?error=true' });
+                    console.log(JSON.stringify(existingAccount));
+                    res.end();
+                }
+                else {
+                    // Insert a new user
+                    const result = await collection.insertOne(newUser);
+
+                    // Redirect to login page
+                    res.writeHead(302, { 'Location': '/login' });
+                    res.end();
+                }
+            }
+            // Catch any errors that come up
+            catch (err) {
+                res.writeHead(500);
+                res.end("Database Error: " + err.message);
+            }
+            finally {
+                await client.close();
+            }
+        });
+        return;
+    }
+    
     // Load the home page
     else if (path == "/cart") {
         fs.readFile("cart.html", function(err, txt) {

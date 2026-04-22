@@ -35,7 +35,7 @@
                 <h1>Sign Up</h1>
                 <!-- Link to the log in page -->
                 <p>Already have an account? <a href="login">Log in</a></p>
-                <form method="get" action="login">
+                <form method="POST" action="process-signup">
                     <label for="first">First Name</label>
                     <input name="first" type="text">
                     <label for="first">Last Name</label>
@@ -64,4 +64,10 @@
         </div>
     </footer>
 </body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('error')) {
+        alert("That email already has an account");
+    }
+</script>
 </html>
