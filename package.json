@@ -1,21 +1,11 @@
 {
-  "name": "secondhand-stories",
+  "name": "helloapp",
   "version": "1.0.0",
-  "description": "Giving every story a second chapter.",
-  "main": "secondhand-stories.js",
+  "description": "example node app for heroku ",
+  "main": "webapp2.js",
   "scripts": {
-    "start": "node secondhand-stories.js"
+    "start": "node webapp2.js"
   },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": ""
-  },
-  "homepage": "",
   "dependencies": {
     "mongodb": "4.0"
   }
