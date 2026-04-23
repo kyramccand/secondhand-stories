@@ -26,7 +26,7 @@ var server = http.createServer(function (req, res) {
 
     
     // Load the home page
-    if (path == "/home") {
+    if (path == "/home" || path == "/") {
         fs.readFile("home.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
