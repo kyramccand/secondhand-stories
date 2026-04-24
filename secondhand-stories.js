@@ -7,6 +7,8 @@ var port = 8080;   // uncomment to run local
 
 const MongoClient = require('mongodb').MongoClient;
 const connStr = "mongodb+srv://login_user:db123@leaderboard.gw09mzd.mongodb.net/?appName=leaderboard";
+// The header is set to the guest one by defualt, will update upon login
+const header = fs.readFileSync("guest_header.html", "utf8");
 
 var userInfo = 
     {
@@ -24,7 +26,6 @@ var server = http.createServer(function (req, res) {
     urlObj = url.parse(req.url, true);
     var path = urlObj.pathname;
 
-    
     // Load the home page
     if (path == "/home" || path == "/") {
         fs.readFile("home.html", function(err, txt) {
@@ -33,6 +34,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading home.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -46,6 +48,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading login.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -108,6 +111,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading signup.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -180,6 +184,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading cart.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -193,6 +198,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading catalog.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -206,6 +212,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading donate.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -262,6 +269,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading about.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -275,6 +283,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading privacyPolicy.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -380,6 +389,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading about.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -393,6 +403,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading privacyPolicy.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -406,6 +417,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading termsOfService.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
@@ -419,6 +431,7 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading leaderboard.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
             }
             res.end();
