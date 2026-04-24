@@ -11,14 +11,6 @@ const connStr = "mongodb+srv://login_user:db123@leaderboard.gw09mzd.mongodb.net/
 const header = fs.readFileSync("header.html", "utf8");
 const footer = fs.readFileSync("footer.html", "utf8");
 
-
-var userInfo = 
-    {
-        "first": "",
-        "last": "",
-        "email": ""
-    };
-
 console.log("Server ready");
 
 // Create the server
@@ -87,7 +79,7 @@ var server = http.createServer(function (req, res) {
 
                 if (matchingUser) {
                     // Save login information
-                    res.writeHead(302, { 'Location': `/home?first=${matchingUser.firstName}&last=${matchingUser.lastName}` });
+                    res.writeHead(302, { 'Location': `/home?first=${matchingUser.firstName}&last=${matchingUser.lastName}&email=${matchingUser.email}` });
                     // Success! Redirect to home or show success
                     res.end();
                 } else {
@@ -260,7 +252,7 @@ var server = http.createServer(function (req, res) {
 
             }
             else {
-                res.writeHead(302, { 'Location': `/donate?error=true` });
+                res.writeHead(302, { 'Location': `/donate?error=not_found` });
                 res.end();
             }
         });
@@ -308,6 +300,7 @@ var server = http.createServer(function (req, res) {
         req.on('end', async () => {
             // Get the form data
             const formData = querystring.parse(body);
+            const email = formData.email;
 
             apiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${formData.title}&inauthor:${formData.author}&key=AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA`;
 
@@ -344,25 +337,25 @@ var server = http.createServer(function (req, res) {
                     const db = client.db("secondhand-db");
                     // Go to this collection
                     const collection = db.collection("books");
-                    
-                    // Insert the new book
-                    const result = await collection.insertOne(newBook);
 
                     try {
                         // Go to this database
                         const usersDb = client.db("secondhand-db");
                         // Go to this collection
                         const usersCollection = usersDb.collection("users");
-                        const existingAccount = await usersCollection.findOne({"email": userInfo.email});
+                        const existingAccount = await usersCollection.findOne({"email": email});
 
                         // Check for an existing account
                         if (existingAccount) {
                             currDonations = existingAccount.donations;
                             currDonations += 1;
-                            const result = await usersCollection.updateOne({ email: userInfo.email }, { $set: {donations: currDonations}});
+                            await usersCollection.updateOne({ email: email }, { $set: {donations: currDonations}});
+
+                            // Insert the new book
+                            await collection.insertOne(newBook);
                         }
                         else {
-                            res.writeHead(302, { 'Location': '/login?error=true' });
+                            res.writeHead(302, { 'Location': '/login?error=before_donate' });
                             return res.end();
                         }
                     }
@@ -373,7 +366,7 @@ var server = http.createServer(function (req, res) {
                     }
 
                     // Redirect to login page
-                    res.writeHead(302, { 'Location': '/home' });
+                    res.writeHead(302, { 'Location': '/home?status=donate_success' });
                     return res.end();
                 }
                 // Catch any errors that come up

@@ -8,8 +8,8 @@
         <style type="text/css">
     
             .profile-pic {
-                width: 70px;
-                height: 70px;
+                height: 80%;
+                aspect-ratio: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -63,14 +63,13 @@
         const urlParams = new URLSearchParams(window.location.search);
         const first = urlParams.get('first');
         const last = urlParams.get('last');
+        const email = urlParams.get('email');
 
         if (first && last) {
             // Save it to localStorage for future use
             localStorage.setItem('user_first', first);
             localStorage.setItem('user_last', last);
-            
-            // // Clean the URL so the names aren't visible in the address bar
-            // window.history.replaceState({}, document.title, window.location.pathname);
+            localStorage.setItem('user_email', email); // Save the email!
         }
 
         // Retrieve data from localStorage

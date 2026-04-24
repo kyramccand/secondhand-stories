@@ -14,9 +14,9 @@
                 <p>Don't have an account yet? <a href="signup">Sign up</a></p>
                 <form method="POST" action="process-login">
                     <label for="email">Email</label>
-                    <input name="email" type="email">
+                    <input name="email" type="email" required>
                     <label for="password">Password</label>
-                    <input name="password" type="password">
+                    <input name="password" type="password" required>
                     <!-- Log in submit button -->
                     <input type="submit" value="Log In">
                 </form>
@@ -29,9 +29,14 @@
     <!-- End of content -->
 </body>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('error') == 'account-not-found') {
-        alert("Incorrect username or password");
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') === 'account-not-found') {
+            alert("Incorrect username or password");
+        }
+        else if (urlParams.get('error') === 'before_donate') {
+            alert("In order to make a donation, you must log in first");
+        }
+    });
 </script>
 </html>

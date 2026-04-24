@@ -153,6 +153,7 @@
                     <label for="author">Author</label>
                     <input id="author" name="author" type="text">
                     <input type="submit" value="Submit">
+                    <input type="hidden" name="email" id="email">
                 </form>
                 <div id="result"></div>
             </div>
@@ -161,17 +162,22 @@
         <!-- End of centered page -->
     </div>
     <!-- End of content -->
-
-     
 </body>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('error')) {
-        alert("No books found");
-    }
-    if (urlParams.get('title') && urlParams.get('author')) {
-        document.getElementById("title").value = urlParams.get('title');
-        document.getElementById("author").value = urlParams.get('author');
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+
+        const storedEmail = localStorage.getItem('user_email');
+        document.getElementById('email').value = storedEmail;
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.get('error') == "not_found") {
+            alert("No books found");
+        }
+        if (urlParams.get('title') && urlParams.get('author')) {
+            document.getElementById("title").value = urlParams.get('title');
+            document.getElementById("author").value = urlParams.get('author');
+        }
+    });
 </script>
 </html>
