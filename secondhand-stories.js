@@ -8,7 +8,7 @@ var port = 8080;   // uncomment to run local
 const MongoClient = require('mongodb').MongoClient;
 const connStr = "mongodb+srv://login_user:db123@leaderboard.gw09mzd.mongodb.net/?appName=leaderboard";
 // The header is set to the guest one by defualt, will update upon login
-const header = fs.readFileSync("guest_header.html", "utf8");
+var header = fs.readFileSync("header.html", "utf8");
 
 var userInfo = 
     {
@@ -83,11 +83,8 @@ var server = http.createServer(function (req, res) {
 
                 if (matchingUser) {
                     // Save login information
-                    userInfo.first = matchingUser.first;
-                    userInfo.last = matchingUser.last;
-                    userInfo.email = matchingUser.email;
+                    res.writeHead(302, { 'Location': `/home?first=${matchingUser.firstName}&last=${matchingUser.lastName}` });
                     // Success! Redirect to home or show success
-                    res.writeHead(302, { 'Location': '/home' });
                     res.end();
                 } else {
                     // Failure
