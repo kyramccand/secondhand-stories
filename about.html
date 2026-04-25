@@ -1,147 +1,159 @@
-<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>About</title>
-        <link rel="stylesheet" href="style.css">
-        <style type="text/css">
-                .banner-image {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    background: url("./images/banner-about-page.jpg");
-                    background-color: #e9eed9a0;
-                    background-blend-mode: lighten;
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    background-position: center;
-                    min-height: 300px;
-                    width: 100%;
-                    padding-bottom: 50px;
-                }
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>About</title>
+    <link rel="stylesheet" href="style.css" />
+    <style type="text/css">
+      .banner-image {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: url("./images/banner-about-page.jpg");
+        background-color: #e9eed9a0;
+        background-blend-mode: lighten;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        min-height: 300px;
+        width: 100%;
+        padding-bottom: 50px;
+      }
 
-                .below-image {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    background: url("./images/about-books.jpg");
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    background-position: center;
-                    min-height: 200px;
-                    width: 100%;
-                }
+      .below-image {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: url("./images/about-books.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        min-height: 200px;
+        width: 100%;
+      }
 
-                img {
-                    height: 40px;
-                    width: 40px;
-                }
+      img {
+        height: 40px;
+        width: 40px;
+      }
 
-                .description {
-                    width: 70%;
-                    text-align: center;
-                }
+      .description {
+        width: 70%;
+        text-align: center;
+      }
 
-                .number {
-                    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-                    font-size: 60px;
-                }
+      .number {
+        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        font-size: 60px;
+      }
 
-                .value-container {
-                    display: flex;
-                    flex-direction: row;
-                    gap: 20px;
-                }
+      .value-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+      }
 
-                @media (max-width: 768px) {
+      @media (max-width: 768px) {
+        .value-container {
+          flex-direction: column;
+        }
 
-                    .value-container {
-                        flex-direction: column;
-                    }
+        .value-container img {
+          display: block;
+          margin: 0 auto;
+        }
 
-                    .value-container img {
-                        display: block;
-                        margin: 0 auto;
-                    }
+        .description {
+          width: 90%;
+        }
 
-                }
-
-        </style>
-    </head>
-    <body>        
-        <div class="content">
-            <!-- The banner image and text -->
-            <div class="banner-image">
-                <h1>About</h1>
-                <div class="description">
-                    Secondhand Stories is a community-driven company that believes
-                    everyone should have access to affordable books. Every book sold
-                    is a book to support global literacy and keep books out of
-                    landfills.
-                </div>
-            </div>
-
-            <!-- The Our impact section -->
-            <div class="section">
-                <h2>Our Impact</h2>
-                <!-- Organize information in 3 columns -->
-                <div class="three-columns">
-                    <div class="column-container">
-                        <div class="number">500k+</div>
-                        <div>Books saved from landfills and recirculated to readers</div>
-                    </div>
-                    <!-- End of column -->
-                    <div class="column-container">
-                        <div class="number">70%</div>
-                        <div>Average savings compared to major book outlets</div>
-                    </div>
-                    <!-- End of column -->
-                    <div class="column-container">
-                        <div class="number">100%</div>
-                        <div>Of our shipping materials are recycled or biodegradable</div>
-                    </div>
-                    <!-- End of column -->
-                </div>
-                <!-- End of three columns -->
-            </div>
-            <!-- End of Our Impact section -->
-
-            <!-- Image -->
-            <div class="below-image"></div>
-
-            <!-- The Our values section -->
-            <div class="section">
-                <h2>Our Values</h2>
-                <div class="two-columns">
-                    <div class="value-container">
-                        <img src="images/icons8-community-50.png">
-                        <div>We believe in building a community through our network of
-                        donors and buyers.</div>
-                    </div>
-                    <!-- End of value -->
-                    <div class="value-container">
-                        <img src="images/magnifier-glass-icon.png">
-                        <div>Secondhand doesn't mean lesser quality. We inspect all
-                        donations to ensure they're ready for sale.</div>
-                    </div>
-                    <!-- End of value -->
-                    <div class="value-container">
-                        <img src="images/icons8-leaf-50.png">
-                        <div>We prioritize sustainability by promoting a circular
-                        book system and minimizing package waste.</div>
-                    </div>
-                    <!-- End of value -->
-                    <div class="value-container">
-                        <img src="images/money-icon.webp">
-                        <div>Everyone should have the ability to find affordable books,
-                        we ensure cost isn't a barrier in literacy.</div>
-                    </div>
-                    <!-- End of value -->
-                </div>
-                <!-- End of value container -->
-            </div>
-            <!-- End of Our values section -->
+        .number {
+          font-size: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <!-- The banner image and text -->
+      <div class="banner-image">
+        <h1>About</h1>
+        <div class="description">
+          Secondhand Stories is a community-driven company that believes
+          everyone should have access to affordable books. Every book sold is a
+          book to support global literacy and keep books out of landfills.
         </div>
-    </body>
+      </div>
+
+      <!-- The Our impact section -->
+      <div class="section">
+        <h2>Our Impact</h2>
+        <!-- Organize information in 3 columns -->
+        <div class="three-columns">
+          <div class="column-container">
+            <div class="number">500k+</div>
+            <div>Books saved from landfills and recirculated to readers</div>
+          </div>
+          <!-- End of column -->
+          <div class="column-container">
+            <div class="number">70%</div>
+            <div>Average savings compared to major book outlets</div>
+          </div>
+          <!-- End of column -->
+          <div class="column-container">
+            <div class="number">100%</div>
+            <div>Of our shipping materials are recycled or biodegradable</div>
+          </div>
+          <!-- End of column -->
+        </div>
+        <!-- End of three columns -->
+      </div>
+      <!-- End of Our Impact section -->
+
+      <!-- Image -->
+      <div class="below-image"></div>
+
+      <!-- The Our values section -->
+      <div class="section">
+        <h2>Our Values</h2>
+        <div class="two-columns">
+          <div class="value-container">
+            <img src="images/icons8-community-50.png" />
+            <div>
+              We believe in building a community through our network of donors
+              and buyers.
+            </div>
+          </div>
+          <!-- End of value -->
+          <div class="value-container">
+            <img src="images/magnifier-glass-icon.png" />
+            <div>
+              Secondhand doesn't mean lesser quality. We inspect all donations
+              to ensure they're ready for sale.
+            </div>
+          </div>
+          <!-- End of value -->
+          <div class="value-container">
+            <img src="images/icons8-leaf-50.png" />
+            <div>
+              We prioritize sustainability by promoting a circular book system
+              and minimizing package waste.
+            </div>
+          </div>
+          <!-- End of value -->
+          <div class="value-container">
+            <img src="images/money-icon.webp" />
+            <div>
+              Everyone should have the ability to find affordable books, we
+              ensure cost isn't a barrier in literacy.
+            </div>
+          </div>
+          <!-- End of value -->
+        </div>
+        <!-- End of value container -->
+      </div>
+      <!-- End of Our values section -->
+    </div>
+  </body>
 </html>
