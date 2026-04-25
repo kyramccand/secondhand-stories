@@ -75,12 +75,12 @@
         </a>
     
         <div class="allLinks">
-            <a class="cartLink" href="cart.html"><button>Cart</button></a>
+            <a class="cartLink" href="cart"><button>Cart</button></a>
             <ul class="navLinks">
-                <li><a href="about.html">About</a></li>
-                <li><a href="catalog.html">Catalog</a></li>
-                <li><a href="donate.html">Donate</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="about">About</a></li>
+                <li><a href="catalog">Catalog</a></li>
+                <li><a href="donate">Donate</a></li>
+                <li><a href="leaderboard">Leaderboard</a></li>
             </ul>
         </div>
     </nav>
@@ -117,50 +117,61 @@
     <footer>
         <div>2026 Secondhand Stories. All rights reserved. | </div>
         <div>
-            <a href="privacyPolicy.html">Privacy Policy</a> |
-            <a href="termsOfService.html">Terms of Service</a>
+            <a href="privacyPolicy">Privacy Policy</a> |
+            <a href="termsOfService">Terms of Service</a>
         </div>
     </footer>
     <script>
-        function loadBookDetails() {
-            const params = new URLSearchParams(window.location.search);
-            const bookId = params.get("id");
+        // function loadBookDetails() {
+        //     const params = new URLSearchParams(window.location.search);
+        //     const bookId = params.get("id");
 
-            if (!bookId) {
-                document.getElementById("info-title").innerText = "No book selected.";
-                return;
-            }
+        //     if (!bookId) {
+        //         document.getElementById("info-title").innerText = "No book selected.";
+        //         return;
+        //     }
 
-            const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
+        //     const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
             
 
-            fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                const info = data.volumeInfo;
+        //     fetch(url)
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         const info = data.volumeInfo;
 
-                document.getElementById("info-title").innerText = info.title || "Unknown";
+        //         document.getElementById("info-title").innerText = info.title || "Unknown";
 
-                let author = "Unknown";
-                if (info.authors) author = info.authors[0];
-                document.getElementById("info-author").innerText = author;
+        //         let author = "Unknown";
+        //         if (info.authors) author = info.authors[0];
+        //         document.getElementById("info-author").innerText = author;
 
-                let date = "Unknown";
-                if (info.publishedDate) date = info.publishedDate.substring(0, 4);
-                document.getElementById("info-date").innerText = date;
+        //         let date = "Unknown";
+        //         if (info.publishedDate) date = info.publishedDate.substring(0, 4);
+        //         document.getElementById("info-date").innerText = date;
 
-                let genre = "Unknown";
-                if (info.categories) genre = info.categories[0];
-                document.getElementById("info-genre").innerText = genre;
+        //         let genre = "Unknown";
+        //         if (info.categories) genre = info.categories[0];
+        //         document.getElementById("info-genre").innerText = genre;
 
-                let cover = "";
-                if (info.imageLinks) cover = info.imageLinks.thumbnail;
-                document.getElementById("book-cover").src = cover;
-            })
-            .catch(error => console.log(error));
-        }
+        //         let cover = "";
+        //         if (info.imageLinks) cover = info.imageLinks.thumbnail;
+        //         document.getElementById("book-cover").src = cover;
+        //     })
+        //     .catch(error => console.log(error));
+        // }
 
-        loadBookDetails();
+        // loadBookDetails();
+        const book = window.selectedBook;
+
+    if (!book) {
+        document.getElementById("info-title").innerText = "Book not found.";
+    } else {
+        document.getElementById("info-title").innerText = book.title || "Unknown";
+        document.getElementById("info-author").innerText = book.author || "Unknown";
+        document.getElementById("info-date").innerText = book.year || "Unknown";
+        document.getElementById("info-genre").innerText = book.genre || "Unknown";
+        document.getElementById("book-cover").src = book.image || "";
+    }
 
     </script>
 </body>
