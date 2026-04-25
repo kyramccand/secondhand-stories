@@ -83,7 +83,7 @@ body {
 .navLinks {
     display: flex;
     height: 100%;
-    align-items: end;
+    align-items: center;
     align-self: end;
     gap: 20px;
     list-style: none;
