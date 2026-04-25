@@ -1,37 +1,9 @@
 <html>
 <style type="text/css">
-    /* Main container for the single-input search */
-    .isbn-search-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #1B4332;
-        color: #E9EED9;
-        border-radius: 20px;
-        width: 100%;
-        max-width: 500px;
-        padding: 40px;
-        margin: 20px 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    .isbn-search-container h3 {
-        margin-top: 0;
-        margin-bottom: 20px;
-        color: #E9EED9;
-    }
-
-    .isbn-search-container form {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 15px;
-    }
-
+    
     .helper-text {
         font-size: 14px;
         margin-top: 10px;
-        opacity: 0.8;
     }
 
     @media (max-width: 768px) {
@@ -48,8 +20,7 @@
             <h1>Donate a Book</h1>
             <p>Ready to share a story? Simply enter the 13-digit ISBN found on the back of your book, and we'll handle the rest.</p>
             
-            <div class="form-container" style="background: none; box-shadow: none;">
-                <div class="isbn-search-container">
+            <div class="form-container">
                     <h3>Enter ISBN</h3>
                     <form action="process-donate" method="POST">
                         <label for="isbn">ISBN Number</label>
@@ -60,7 +31,6 @@
                         <input type="submit" value="Donate Book">
                     </form>
                     <span class="helper-text">You can usually find the ISBN above the barcode.</span>
-                </div>
             </div>
         </div>
     </div>
