@@ -1,6 +1,11 @@
-html, body, div {
+html, div {
     box-sizing: border-box;
     padding: 0;
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
 }
 
 h1, h2 {
@@ -30,21 +35,35 @@ body {
     min-height: 100vh;
     background: #E9EED9;
     margin: 0;
+    flex-direction: column;
 }
 
 .content {
     flex: 1;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .navBar {
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     background-color: #1B4332;
     color: #E9EED9;
-    padding: 10px 20px 0 20px;
+    padding: 10px;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.navBar h1 {
+    margin: 0;
+    font-size: clamp(20px, 3vw, 48px);
+}
+
+.navLinks a {
+    font-size: clamp(14px, 1.5vw, 24px);
 }
 
 .brandName {
@@ -56,10 +75,16 @@ body {
     font-size: 40px;
     font-weight: 400;
     gap: 10px;
+    flex-shrink: 1;
+    min-width: 0;
+    white-space: nowrap;
 }
 
 .navLinks {
     display: flex;
+    height: 100%;
+    align-items: center;
+    align-self: end;
     gap: 20px;
     list-style: none;
     margin: 0;
@@ -77,14 +102,34 @@ body {
     color: #FFB703;
 }
 
-.allLinks {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    gap: 15px;
-    margin-right: 15px;
+.navLinks.hamburger {
+  background: white;
+  padding: 1.5rem 3rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(#FFB703);
+  flex-shrink: 0;
 }
+
+.circle {
+  border-radius: 100px;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(#FFB703);
+  box-shadow: var(#E9EED9) 0px 2px 4px;
+  cursor: pointer;
+}
+
+.circle:hover {
+  background-color: var(#1B4332);
+}
+
+
+
 
 footer {
     width: 100%;
@@ -97,7 +142,7 @@ footer {
     align-items: center;
     gap: 20px;
     padding: 20px;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 footer a {
@@ -124,7 +169,7 @@ footer a:hover {
     display: grid;
     text-align: center;
     grid-template-columns: 1fr 1fr 1fr;
-    width: 70%;
+    width: 90%;
     gap: 30px;
     padding: 20px;
 }
@@ -141,7 +186,7 @@ footer a:hover {
     display: grid;
     text-align: center;
     grid-template-columns: 1fr 1fr;
-    width: 70%;
+    width: 90%;
     gap: 40px;
     margin: 40px;
 }
@@ -168,6 +213,45 @@ button:hover, input[type="submit"]:hover {
     color: #E9EED9;
 }
 
+.page-center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 20px;
+    width: 60%;
+    padding: 20px;
+    margin: 50px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 80%;
+    gap: 10px;
+}
+
+input {
+    width: 100%;
+    background: #D9D9D9;
+    border-radius: 10px;
+    border: none;
+    height: 30px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
 
 @media (max-width: 768px) {
   .navbar {
@@ -182,12 +266,12 @@ button:hover, input[type="submit"]:hover {
     gap: 12px;
   }
 
-  .nav-links {
+  .navLinks {
     display: none;
   }
 
   /* Hamburger menu shows up on mobile or any small screen */
-  .nav-links.hamburger {
+  .navLinks.hamburger {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -261,10 +345,28 @@ button:hover, input[type="submit"]:hover {
     font-size: 14px !important;
   }
 
+  .form-container {
+        width: 90%;
+    }
+
+    .three-columns {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+
+    .two-columns {
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 20px;
+    }
+
 }
 
 @media (min-width: 769px) {
-  .nav-links {
+  .navLinks {
     display: flex;
   }
 
@@ -286,64 +388,5 @@ button:hover, input[type="submit"]:hover {
     border-radius: 6px;
   }
 }
-.page-center-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-}
 
-
-.form-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #ffffff;
-    border-radius: 20px;
-    width: 60%;
-    padding: 20px;
-    margin: 50px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 80%;
-    gap: 10px;
-}
-
-input {
-    width: 100%;
-    background: #D9D9D9;
-    border-radius: 10px;
-    border: none;
-    height: 30px;
-    margin-bottom: 10px;
-    padding: 5px;
-}
-
-@media (max-width: 768px) {
-
-    .form-container {
-        width: 90%;
-    }
-
-    .three-columns {
-        width: 90%;
-        grid-template-columns: 1fr;
-    }
-
-    .two-columns {
-        width: 90%;
-        grid-template-columns: 1fr;
-    }
-
-    .section {
-        padding: 20px;
-    }
-
-}
 

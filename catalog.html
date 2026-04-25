@@ -52,7 +52,7 @@
             margin-left: auto;
             margin-right: auto;
             box-sizing: border-box;
-            
+            flex-shrink: 0;
             margin: 0 auto 40px auto;
             width: 100%;
             max-width: 1000px;
@@ -169,9 +169,11 @@
         }
         
         .wrap {
-            max-width: 100%;
+            max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
             padding: 40px 24px;
+            flex: 1;
             
         }
 
@@ -195,26 +197,7 @@
     </style>
 </head>
 <body>
-
-    <nav class="navBar">
-        <a href="home" class="brandName">
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
-            </svg>
-            <h1>Secondhand Stories</h1>
-        </a>
-    
-        <div class="allLinks">
-            <a class="cartLink" href="cart"><button>Cart</button></a>
-            <ul class="navLinks">
-                <li><a href="about">About</a></li>
-                <li><a href="catalog">Catalog</a></li>
-                <li><a href="donate">Donate</a></li>
-                <li><a href="leaderboard">Leaderboard</a></li>
-            </ul>
-        </div>
-    </nav>
-
+    <div class = "content">
     <div class="wrap">
         <div class="header">
             <h1>Catalog</h1>
@@ -223,25 +206,7 @@
                 library. Find your next read and give a book a new home.</p>
         </div>
 
-        <!-- <div class="search-bar">
-            <div class="search-title">
-                <label>Title</label>
-                <input type="text" id="search-title">
-            </div>
-            <div class="search-author">
-                <label>Author</label>
-                <input type="text" id="search-author">
-            </div>
-            <div class="search-genre">
-                <label>Genre</label>
-                <input type="text" id="search-genre">
-            </div>
-            <div class="search-year">
-                <label>Year</label>
-                <input type="text" id="search-year">
-            </div>
-            <button class="search-btn" onclick="handleSearch()"></button>
-        </div> -->
+        
         <form action="/process-catalog" method="POST" class="search-bar">
             <div class="search-title">
                 <label>Title</label>
@@ -263,102 +228,16 @@
         </form>
 
         <div class="catalog-grid" id="catalog-grid">
-            <!--<div class="book-card">
-                <img class="book-cover" id="cover-mockingbird">
-                <div class="book-info">
-                    <div class="book-title">To Kill a Mockingbird</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Harper Lee<br>
-                        <strong>Published</strong>: 1960<br>
-                        <strong>Genre</strong>: History, Fiction
-                    </div>
-                </div>
-                <a href="see_details.html?id=_eBnuQOIh-0C" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-overcoat">
-                <div class="book-info">
-                    <div class="book-title">The Overcoat</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Nikolai Gogol<br>
-                        <strong>Published</strong>: 1842<br>
-                        <strong>Genre</strong>: Classics, Fiction
-                    </div>
-                </div>
-                <a href="see_details.html?id=" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-homegoing">
-                <div class="book-info">
-                    <div class="book-title">Homegoing</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Yaa Gyasi<br>
-                        <strong>Published</strong>: 2016<br>
-                        <strong>Genre</strong>: Historical Fiction
-                    </div>
-                </div>
-                <a href="see_details.html" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-sisyphus">
-                <div class="book-info">
-                    <div class="book-title">The Myth of Sisyphus</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Albert Camus<br>
-                        <strong>Published</strong>: 1942<br>
-                        <strong>Genre</strong>: Philosophy, Classics
-                    </div>
-                </div>
-                <a href="see_details.html?id=iVV7bKVUNBAC" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-scythe">
-                <div class="book-info">
-                    <div class="book-title">Scythe</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Neal Shusterman<br>
-                        <strong>Published</strong>: 2016<br>
-                        <strong>Genre</strong>: Fantasy, Young Adult
-                    </div>
-                </div>
-                <a href="see_details.html?id=_6TAEAAAQBAJ" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-circe">
-                <div class="book-info">
-                    <div class="book-title">Circe</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Madeline Miller<br>
-                        <strong>Published</strong>: 2018<br>
-                        <strong>Genre</strong>: Fantasy, Mythology
-                    </div>
-                </div>
-                <a href="see_details.html?id=dyikEAAAQBAJ" style="align-self: center;">
-                    <button class="details-btn">See details</button>
-                </a>
-            </div>
-        </div>-->
+            
     </div>
-    
-    <footer>
-        <div>&copy; 2026 Secondhand Stories. All rights reserved. | </div>
-        <div>
-            <a href="privacy-policy">Privacy Policy</a> |
-            <a href="terms-of-service">Terms of Service</a>
-        </div>
-    </footer>
+    </div>
 </body>
 <script>
     const bookResults = window.myLibraryData || [];
     const grid = document.getElementById('catalog-grid');
 
     function renderCatalog() {
-        grid.innerHTML = ""; // Clear the grid
+        grid.innerHTML = ""; //clear the grid
 
         if (bookResults.length === 0) {
             grid.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>No books found in our library. Try a different search!</p>";
@@ -366,8 +245,8 @@
         }
 
         bookResults.forEach(book => {
-            // Use the image saved in your DB, or a default gray placeholder
-            const coverSrc = book.image || 'https://via.placeholder.com/150x200?text=No+Cover';
+            // use the image saved in DB
+            const coverSrc = book.image;
 
             grid.innerHTML += `
                 <div class="book-card">
@@ -390,137 +269,5 @@
 
     // Run when page loads
     renderCatalog();
-
-//     async function fetchWithRetry(url, retries = 5) {
-//     for (let i = 0; i < retries; i++) {
-//         try {
-//             const res = await fetch(url);
-//             const data = await res.json();
-//             if (data.items) return data;
-//         } catch (error) {
-//             console.log(`Attempt ${i + 1} failed, retrying...`);
-//         }
-//         await new Promise(resolve => setTimeout(resolve, 1000));
-//     }
-//     return null;
-// }
-//     async function handleSearch() {
-//         const title = document.getElementById('search-title').value;
-//         const author = document.getElementById('search-author').value;
-//         const genre = document.getElementById('search-genre').value;
-//         const year = document.getElementById('search-year').value;
-//         const grid = document.getElementById('catalog-grid');
-
-//         grid.innerHTML = "<p style='color: black; text-align: center; grid-column: 1/-1;'>Searching...</p>";
-
-//         let query = "";
-//         if (title) query += `intitle:${title}+`;
-//         if (author) query += `inauthor:${author}+`;
-//         if (genre) query += `subject:${genre}+`;
-//         if (year) query += `${year}+`;
-
-        
-//         if (!query) {
-//             grid.innerHTML = "";
-//             return;
-//         }
-
-//         const cleanQuery = query.slice(0, -1); //meant to clean up the above querying
-        
-//         const apiKey = "AIzaSyDJV8TYoGmFA0aNY2wQ-NVyMIiTtIhjMiQ"; 
-//         const api = "AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA";
-//         const url = `https://www.googleapis.com/books/v1/volumes?q=${cleanQuery}&maxResults=12&key=${api}`;
-
-//         const data = await fetchWithRetry(url);
-
-//         if (!data) {
-//             grid.innerHTML = "<p style='text-align: center; grid-column: 1/-1;'>Failed to load results. Please try again.</p>";
-//             return;
-//         }
-
-//         grid.innerHTML = "";
-        
-
-//         if (data.items) {
-//             data.items.forEach(book => {
-//                 const info = book.volumeInfo;
-//                 const bTitle = info.title || "Unknown";
-
-//                 let bAuthor = "Unknown Author";
-//                 if (info.authors) bAuthor = info.authors[0];
-
-//                 let bYear = "N/A";
-//                 if (info.publishedDate) bYear = info.publishedDate.substring(0, 4);
-
-//                 let bGenre = "General";
-//                 if (info.categories) bGenre = info.categories[0];
-
-//                 let bCover = "";
-//                 if (info.imageLinks) bCover = info.imageLinks.thumbnail;
-//                 let bookID = book.id;
-//                 grid.innerHTML += `
-//                     <div class="book-card">
-//                         <img class="book-cover" src="${bCover}">
-//                         <div class="book-info">
-//                             <div class="book-title">${bTitle}</div>
-//                             <div class="book-meta">
-//                                 <strong>Author</strong>: ${bAuthor}<br>
-//                                 <strong>Published</strong>: ${bYear}<br>
-//                                 <strong>Genre</strong>: ${bGenre}
-//                             </div>
-//                         </div>
-//                         <a href="see_details.html?id=${book.id}" style="align-self: center; text-decoration: none;">
-//                             <button class="details-btn">See details</button>
-//                         </a>
-//                     </div>
-//                 `;
-//             });
-//         } else {
-//             grid.innerHTML = "<p style='color: white; text-align: center; grid-column: 1/-1;'>No results found.</p>";
-//         }
-//     }
-
-//     function loadCovers() {
-//         const books = [
-//             { isbn: "9780446310789", imgId: "cover-mockingbird" },
-//             { isbn: "9781473322288", imgId: "cover-overcoat" },
-//             { isbn: "9781101971062", imgId: "cover-homegoing" },
-//             { isbn: "9780679720201", imgId: "cover-sisyphus" },
-//             { isbn: "9781442472433", imgId: "cover-scythe" },
-//             { isbn: "9780316556347", imgId: "cover-circe" },
-//         ];
-
-//         books.forEach((book, index) => {
-//             const cacheKey = `book-cover-${book.isbn}`;
-//             const cached = localStorage.getItem(cacheKey);
-
-//             if (cached) {
-//                 const el = document.getElementById(book.imgId);
-//                 if(el) el.src = cached;
-//             } else {
-//                 setTimeout(() => {
-//                     const apiKey = "AIzaSyDJV8TYoGmFA0aNY2wQ-NVyMIiTtIhjMiQ";
-//                     const api = "AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA";
-//                     const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}&key=${api}`;
-                    
-//                     fetch(url)
-//                     .then(res => res.json()) 
-//                     .then(data => {
-//                         if (data && data.items) {
-//                             const thumbnail = data.items[0].volumeInfo.imageLinks?.thumbnail;
-//                             if (thumbnail) {
-//                                 localStorage.setItem(cacheKey, thumbnail);
-//                                 const el = document.getElementById(book.imgId);
-//                                 if(el) el.src = thumbnail;
-//                             }
-//                         }
-//                     })
-//                     .catch(error => console.log(error));
-//                 }, index * 300);
-//             }
-//         });
-//     }
-
-//     loadCovers();
 </script>
 </html>

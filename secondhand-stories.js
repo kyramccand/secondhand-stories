@@ -2,18 +2,14 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 const querystring = require('querystring');
-// var port = process.env.PORT || 3000;
-var port = 8080;   // uncomment to run local
+var port = process.env.PORT || 3000;
+// var port = 8080;   // uncomment to run local
 
 const MongoClient = require('mongodb').MongoClient;
 const connStr = "mongodb+srv://login_user:db123@leaderboard.gw09mzd.mongodb.net/?appName=leaderboard";
-
-var userInfo = 
-    {
-        "first": "",
-        "last": "",
-        "email": ""
-    };
+// The header and footer to include on every page
+const header = fs.readFileSync("header.html", "utf8");
+const footer = fs.readFileSync("footer.html", "utf8");
 
 console.log("Server ready");
 
@@ -24,16 +20,17 @@ var server = http.createServer(function (req, res) {
     urlObj = url.parse(req.url, true);
     var path = urlObj.pathname;
 
-    
     // Load the home page
-    if (path == "/home") {
+    if (path == "/home" || path == "/") {
         fs.readFile("home.html", function(err, txt) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             // Catch any errors
             if (err) {
                 res.write("Error loading home.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -46,7 +43,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading login.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -77,18 +76,15 @@ var server = http.createServer(function (req, res) {
 
                 // Search for the user
                 const matchingUser = await collection.findOne({ "email": email, "password": pass });
-                
-                userInfo.first = matchingUser.first;
-                userInfo.last = matchingUser.last;
-                userInfo.email = matchingUser.email;
 
                 if (matchingUser) {
-                    // Success! Redirect to home or show success
-                    res.writeHead(302, { 'Location': '/home' });
+                    // Construct the query string for the frontend to parse
+                    const query = `first=${matchingUser.firstName}&last=${matchingUser.lastName}&email=${matchingUser.email}`;
+                    res.writeHead(302, { 'Location': `/home?${query}` });
                     res.end();
                 } else {
                     // Failure
-                    res.writeHead(302, { 'Location': '/login?error=true' });
+                    res.writeHead(302, { 'Location': '/login?error=account-not-found' });
                     res.end();
                 }
             } catch (err) {
@@ -108,7 +104,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading signup.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -142,11 +140,11 @@ var server = http.createServer(function (req, res) {
                 // Go to this collection
                 const collection = db.collection("users");
 
-                const existingAccount = await collection.find({"email": newUser.email});
+                const existingAccount = await collection.findOne({"email": newUser.email});
 
                 // Check for an existing account
-                if (existingAccount && existingAccount["totalItems"] > 0) {
-                    res.writeHead(302, { 'Location': '/signup?error=true' });
+                if (existingAccount) {
+                    res.writeHead(302, { 'Location': '/signup?error=existing-account' });
                     res.end();
                 }
                 else {
@@ -178,7 +176,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading cart.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -216,7 +216,7 @@ var server = http.createServer(function (req, res) {
                 const final = txt.replace('<head>', '<head>' + data);
 
                 res.writeHead(200, { 'Content-Type': 'text/html' });
-                res.end(final);
+                res.end(header + final + footer); //come back
             });
         } catch (err) {
             res.writeHead(500);
@@ -235,7 +235,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading donate.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -277,7 +279,7 @@ var server = http.createServer(function (req, res) {
 
             }
             else {
-                res.writeHead(302, { 'Location': `/donate?error=true` });
+                res.writeHead(302, { 'Location': `/donate?error=not_found` });
                 res.end();
             }
         });
@@ -291,7 +293,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading about.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -304,7 +308,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading privacyPolicy.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -355,7 +361,7 @@ var server = http.createServer(function (req, res) {
                 const finalHtml = txt.replace('<head>', '<head>' + injectedData);
 
                 res.writeHead(200, { 'Content-Type': 'text/html' });
-                res.end(finalHtml);
+                res.end(header + finalHtml + footer);
             });
 
         } catch (err) {
@@ -381,8 +387,10 @@ var server = http.createServer(function (req, res) {
         req.on('end', async () => {
             // Get the form data
             const formData = querystring.parse(body);
+            const isbn = formData.isbn;
+            const email = formData.email;
 
-            apiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${formData.title}&inauthor:${formData.author}&key=AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA`;
+            apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA`;
 
             const response = await fetch(apiUrl);
             const data = await response.json();
@@ -394,8 +402,7 @@ var server = http.createServer(function (req, res) {
                 res.writeHead(302, { 'Location': '/donate?error=not_found' });
                 return res.end();
             }
-
-            if (data && data["totalItems"] != 0) {
+            else {
                 
                 // Create a new book
                 const isbn13 = bookData.industryIdentifiers?.find(id => id.type === "ISBN_13")?.identifier;
@@ -419,25 +426,28 @@ var server = http.createServer(function (req, res) {
                     const db = client.db("secondhand-db");
                     // Go to this collection
                     const collection = db.collection("books");
-                    
-                    // Insert the new book
-                    const result = await collection.insertOne(newBook);
 
                     try {
                         // Go to this database
                         const usersDb = client.db("secondhand-db");
                         // Go to this collection
                         const usersCollection = usersDb.collection("users");
-                        const existingAccount = await usersCollection.findOne({"email": userInfo.email});
+                        const existingAccount = await usersCollection.findOne({"email": email});
 
                         // Check for an existing account
                         if (existingAccount) {
                             currDonations = existingAccount.donations;
+                            currCredits = existingAccount.credits;
                             currDonations += 1;
-                            const result = await usersCollection.updateOne({ email: userInfo.email }, { $set: {donations: currDonations}});
+                            currCredits += 1;
+                            await usersCollection.updateOne({ email: email }, { $set: {donations: currDonations}});
+                            await usersCollection.updateOne({ email: email }, { $set: {credits: currCredits}});
+
+                            // Insert the new book
+                            await collection.insertOne(newBook);
                         }
                         else {
-                            res.writeHead(302, { 'Location': '/login?error=true' });
+                            res.writeHead(302, { 'Location': '/login?error=before_donate' });
                             return res.end();
                         }
                     }
@@ -448,7 +458,7 @@ var server = http.createServer(function (req, res) {
                     }
 
                     // Redirect to login page
-                    res.writeHead(302, { 'Location': '/home' });
+                    res.writeHead(302, { 'Location': '/home?status=donate_success' });
                     return res.end();
                 }
                 // Catch any errors that come up
@@ -484,7 +494,7 @@ var server = http.createServer(function (req, res) {
                 const injectedData = `<script>window.selectedBook = ${JSON.stringify(book)};</script>`;
                 const finalHtml = txt.replace('<head>', '<head>' + injectedData);
                 res.writeHead(200, { 'Content-Type': 'text/html' });
-                res.end(finalHtml);
+                res.end(header + finalHtml + footer);
             });
         } catch (err) {
             res.writeHead(500);
@@ -502,7 +512,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading about.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -516,7 +528,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading privacyPolicy.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -529,7 +543,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading termsOfService.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });
@@ -542,7 +558,9 @@ var server = http.createServer(function (req, res) {
             if (err) {
                 res.write("Error loading leaderboard.html");
             } else {
+                res.write(header); // Write the pre-loaded header
                 res.write(txt);
+                res.write(footer); // Write the pre-loaded footer
             }
             res.end();
         });

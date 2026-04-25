@@ -1,207 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
 <html>
-  <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="keywords" content="secondhand books, affordable books, book donations, global literacy, sustainability" />
-    <meta name="description" content="Support Secondhand Stories by donating books and helping to promote global literacy." />
-    <title>Donate</title>
-    <link rel="stylesheet" href="style.css" />
-     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-  <style></style>
-<head>
-    <title>Donate</title>
-    <link rel="stylesheet" href="style.css">
-    <style type="text/css">
-        .autofill {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            background-color: #1B4332;
-            color: #E9EED9;
-            border-radius: 10px;
-            width: 80%;
-            padding: 30px;
-            margin-bottom: 40px;
+<style type="text/css">
+    
+    .helper-text {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .isbn-search-container {
+            width: 90%;
+            padding: 25px;
         }
+    }
+</style>
 
-        .autofill form {
-            display: flex; 
-            flex-direction: row;
-            justify-content: flex-start; 
-            align-items: flex-end;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .autofill h3 {
-            color: #E9EED9;
-            margin: 10px 0;
-        }
-
-        .autofill form label {
-            color: #E9EED9;
-        }
-
-        .autofill input {
-            width: 100%;
-        }
-
-        .autofill input[type="submit"] {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            border-radius: 100px;
-            background-image: url("./images/magnifier-glass-icon.png");
-            background-size: 20px;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: inline-block;
-            margin: 10px 0 0 0;
-        }
-
-        .fields {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .field-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
-            flex: 1;
-        }
-
-        p {
-            width: 60%;
-            text-align: center;
-        }
-
-        .form-container label {
-            display: block;
-            text-align: left;
-        }
-
-        @media (max-width: 768px) {
-
-            form {
-                width: 90%;
-            }
-            
-            .fields {
-                flex-direction: column;
-            }
-
-            .autofill form {
-                flex-direction: column;
-            }
-
-            .autofill {
-                width: 90%;
-            }
-
-            .autofill input[type="submit"] {
-                width: 100%;
-                border-radius: 20px;
-                background-size: 20px;
-                display: block;
-                margin: 10px auto;
-            }
-        }
-
-    </style>
-</head>
 <body>
-    <!-- Navigation bar -->
-    <nav class="navBar">
-        <!-- Logo and brand name -->
-        <a href="home" class="brandName">
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
-            </svg>
-            <h1>Secondhand Stories</h1>
-        </a>
-
-        <!-- Actual navigation -->
-        <div class="allLinks">
-            <a class="cartLink" href="cart"><button>Cart</button></a>
-            <ul class="navLinks">
-                <li><a href="about">About</a></li>
-                <li><a href="catalog">Catalog</a></li>
-                <li><a href="donate">Donate</a></li>
-                <li><a href="leaderboard">Leaderboard</a></li>
-            </ul>
-        </div>
-    </nav>
-    <!-- End of navigation bar -->
-
     <div class="content">
         <div class="page-center-container">
-            <h1>Donate</h1>
-            <p>Don't let your old books collect dust on your shelves! Fill out
-               the information below to donate your books. You may enter Book
-                details manually or use our built in ISBN autofill feature to
-                save time.</p>
+            <h1>Donate a Book</h1>
+            <p>Ready to share a story? Simply enter the 13-digit ISBN found on the back of your book, and we'll handle the rest.</p>
+            
             <div class="form-container">
-                <!-- Autofill form container-->
-                <div class="autofill">
-                    <h3>Autofill</h3>
-                    <form action="process-autofill" method="POST">
-                        <div class="fields">
-                            <div class="field-container">
-                                <label for="title">Title</label>
-                                <input id="title-input" name="title" type="text">
-                            </div>
-                            <div class="field-container">
-                                <label for="isbn">ISBN</label>
-                                <input id="isbn-input" name="isbn" type="number">
-                            </div>
-                        </div>
-                        <!-- The submit button is a search icon -->
-                        <input type="submit" value="">
+                    <h3>Enter ISBN</h3>
+                    <form action="process-donate" method="POST">
+                        <label for="isbn">ISBN Number</label>
+                        <input id="isbn-input" name="isbn" type="number" required>
+                        
+                        <input type="hidden" name="email" id="email">
+                        
+                        <input type="submit" value="Donate Book">
                     </form>
-                </div>
-                <!-- End of autofill container -->
-
-                <form action="process-donate" method="POST">
-                <!--prev form tag-->
-                    <label for="title">Title</label>
-                    <input id="title" name="title" type="text">
-                    <label for="author">Author</label>
-                    <input id="author" name="author" type="text">
-                    <input type="submit" value="Submit">
-                </form>
-                <div id="result"></div>
+                    <span class="helper-text">You can usually find the ISBN above the barcode.</span>
             </div>
-            <!-- End of form container -->
         </div>
-        <!-- End of centered page -->
     </div>
-    <!-- End of content -->
-
-     <footer>
-        <div>&copy; 2026 Secondhand Stories. All rights reserved. | </div>
-        <div>
-            <a href="privacy-policy">Privacy Policy</a> |
-            <a href="terms-of-service">Terms of Service</a>
-        </div>
-    </footer>
 </body>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('error')) {
-        alert("No books found");
-    }
-    if (urlParams.get('title') && urlParams.get('author')) {
-        document.getElementById("title").value = urlParams.get('title');
-        document.getElementById("author").value = urlParams.get('author');
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+        // Get the user email from local storage
+        const storedEmail = localStorage.getItem('user_email');
+        
+        // Safety check
+        if (!storedEmail) {
+            alert("Please log in before donating!");
+            window.location.href = "/login?error=before_donate";
+            return;
+        }
+        
+        // Set the hidden input field for later processing
+        document.getElementById('email').value = storedEmail;
+
+        // Handle errors
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') == "not_found") {
+            alert("We couldn't find a book with that ISBN. Please double-check the number.");
+        }
+    });
 </script>
 </html>

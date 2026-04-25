@@ -1,5 +1,15 @@
 {
-	"dependencies": {
-		"mongodb": "~4.0.1"
-	}
+  "name": "secondhand-stories",
+  "version": "1.0.0",
+  "description": "example node app for heroku ",
+  "main": "secondhand-stories.js",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "start": "node secondhand-stories.js"
+  },
+  "dependencies": {
+    "mongodb": "4.0"
+  }
 }
