@@ -9,7 +9,7 @@ html, body {
 }
 
 h1, h2 {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 h1 {
@@ -25,7 +25,7 @@ h3 {
 }
 
 div, span, p {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 18px;
 }
 
