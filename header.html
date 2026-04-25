@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+        <style type="text/css">
+    
+            .profile-pic {
+                height: 50px;
+                width: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #E9EED9;
+                color: #1B4332;
+                border-radius: 50%;
+                font-weight: bold;
+                font-size: 24px;
+                text-transform: uppercase;
+            }
+
+            .profile-links-container {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                padding-right: 10px;
+            }
+
+            .profile-wrapper {
+                position: relative;
+                cursor: pointer;
+                display: flex;
+            }
+
+            .profile-dropdown {
+                display: none; /* Hidden by default */
+                position: absolute;
+                right: 0;
+                margin-top: 70px;
+                background-color: #ffffff;
+                color: #1B4332;
+                border: 1px solid #1B4332;
+                border-radius: 10px;
+                min-width: 150px;
+            }
+
+            .profile-dropdown div {
+                font-size: 14px;
+                font-weight: 1000;
+                margin: 10px;
+            }
+
+            .profile-dropdown.show {
+                display: block;
+            }
+
+            .profile-dropdown button {
+                display: block;
+                width: 100%;
+                border-radius: 0 0 10px 10px;
+                padding: 10px;
+                height: 40px;
+                color: #1B4332;
+                font-size: 14px;
+                text-decoration: none;
+                text-align: left;
+                border: none;
+                background: none;
+                font-family: inherit;
+                cursor: pointer;
+            }
+
+        </style>
+    </head>
+    <body>
+        <!-- Navigation bar -->
+        <nav class="navBar">
+            <!-- Logo and brand name -->
+            <a href="home" class="brandName">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
+                </svg>
+                <h1>Secondhand Stories</h1>
+            </a>
+
+            <span class="circle">
+                <h1 style="color: #FFB703" id="toggleBar">☰</h1>
+            </span>
+
+            <div class="profile-links-container">
+                <!-- Actual navigation -->
+                <ul id="navLinks" class="navLinks"></ul>
+                <div id="profile"></div>
+            </div>
+        </nav>
+        <!-- End of navigation bar -->
+     </body>
+     
+     <script>
+
+        // Try to get user data from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const first = urlParams.get('first');
+        const last = urlParams.get('last');
+        const email = urlParams.get('email');
+
+        if (first && last) {
+            // Save it to localStorage for future use
+            localStorage.setItem('user_first', first);
+            localStorage.setItem('user_last', last);
+            localStorage.setItem('user_email', email); // Save the email!
+        }
+
+        // Retrieve data from localStorage
+        const storedFirst = localStorage.getItem('user_first');
+        const storedLast = localStorage.getItem('user_last');
+
+        if (storedFirst && storedLast) {
+            // Extract the first letter of each and capitalize them
+            const initials = (storedFirst[0] + storedLast[0]).toUpperCase();
+
+            document.getElementById("navLinks").innerHTML = `
+                <li><a href="about">About</a></li>
+                <li><a href="catalog">Catalog</a></li>
+                <li><a href="donate">Donate</a></li>
+                <li><a href="leaderboard">Leaderboard</a></li>
+                <a class="cartLink" href="cart"><button>Cart</button></a>
+            `;
+
+            // Wrap profile pic and dropdown in a container
+            document.getElementById("profile").innerHTML = `
+                <div class="profile-wrapper" onclick="toggleDropdown()">
+                    <div class="profile-pic">
+                        ${initials}
+                    </div>
+                    <div id="myDropdown" class="profile-dropdown">
+                    <div>${storedFirst} ${storedLast}</div>
+                        <button onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            `;
+        }
+        else {
+            document.getElementById("navLinks").innerHTML = `
+                <li><a href="about">About</a></li>
+                <li><a href="login">Log In</a></li>
+                <li><a href="signup">Sign Up</a></li>
+            `;
+        }
+
+        // Toggle the dropdown menu
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.profile-wrapper')) {
+                const dropdowns = document.getElementsByClassName("profile-dropdown");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('user_first');
+            localStorage.removeItem('user_last');
+            window.location.href = "/login";
+        }
+
+        // Hamburger menu for responsive header
+        let getHamburger = document.querySelector("#toggleBar");
+            getHamburger.addEventListener("click", function () {
+            document.querySelector(".navLinks").classList.toggle("hamburger");
+        });
+
+    </script>
+</html>

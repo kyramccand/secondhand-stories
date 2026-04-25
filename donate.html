@@ -12,7 +12,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-  <style></style>
 <head>
     <title>Donate</title>
     <link rel="stylesheet" href="style.css">
@@ -119,29 +118,6 @@
     </style>
 </head>
 <body>
-    <!-- Navigation bar -->
-    <nav class="navBar">
-        <!-- Logo and brand name -->
-        <a href="home" class="brandName">
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
-            </svg>
-            <h1>Secondhand Stories</h1>
-        </a>
-
-        <!-- Actual navigation -->
-        <div class="allLinks">
-            <a class="cartLink" href="cart"><button>Cart</button></a>
-            <ul class="navLinks">
-                <li><a href="about">About</a></li>
-                <li><a href="catalog">Catalog</a></li>
-                <li><a href="donate">Donate</a></li>
-                <li><a href="leaderboard">Leaderboard</a></li>
-            </ul>
-        </div>
-    </nav>
-    <!-- End of navigation bar -->
-
     <div class="content">
         <div class="page-center-container">
             <h1>Donate</h1>
@@ -177,6 +153,7 @@
                     <label for="author">Author</label>
                     <input id="author" name="author" type="text">
                     <input type="submit" value="Submit">
+                    <input type="hidden" name="email" id="email">
                 </form>
                 <div id="result"></div>
             </div>
@@ -185,23 +162,32 @@
         <!-- End of centered page -->
     </div>
     <!-- End of content -->
-
-     <footer>
-        <div>&copy; 2026 Secondhand Stories. All rights reserved. | </div>
-        <div>
-            <a href="privacy-policy">Privacy Policy</a> |
-            <a href="terms-of-service">Terms of Service</a>
-        </div>
-    </footer>
 </body>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('error')) {
-        alert("No books found");
-    }
-    if (urlParams.get('title') && urlParams.get('author')) {
-        document.getElementById("title").value = urlParams.get('title');
-        document.getElementById("author").value = urlParams.get('author');
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+        // Get the user email from local storage
+        const storedEmail = localStorage.getItem('user_email');
+        // Check that the email exists
+        if (!storedEmail) {
+            alert("Please log in before donating!");
+            window.location.href = "/login?error=before_donate";
+            return;
+        }
+        // Set the hidden input field to this email
+        document.getElementById('email').value = storedEmail;
+        // Fetch the url parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        // Handle any errors indicated
+        if (urlParams.get('error') == "not_found") {
+            alert("Sorry, we couldn't find a book matching that information.");
+        }
+        if (urlParams.get('title') && urlParams.get('author')) {
+            document.getElementById("title").value = urlParams.get('title');
+            document.getElementById("author").value = urlParams.get('author');
+
+            // Clean the URL so a refresh doesn't keep the params
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
 </script>
 </html>
