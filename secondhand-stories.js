@@ -78,9 +78,9 @@ var server = http.createServer(function (req, res) {
                 const matchingUser = await collection.findOne({ "email": email, "password": pass });
 
                 if (matchingUser) {
-                    // Save login information
-                    res.writeHead(302, { 'Location': `/home?first=${matchingUser.firstName}&last=${matchingUser.lastName}&email=${matchingUser.email}` });
-                    // Success! Redirect to home or show success
+                    // Construct the query string for the frontend to parse
+                    const query = `first=${matchingUser.firstName}&last=${matchingUser.lastName}&email=${matchingUser.email}`;
+                    res.writeHead(302, { 'Location': `/home?${query}` });
                     res.end();
                 } else {
                     // Failure

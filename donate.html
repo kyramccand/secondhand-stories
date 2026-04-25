@@ -165,18 +165,28 @@
 </body>
 <script>
     window.addEventListener('DOMContentLoaded', () => {
-
+        // Get the user email from local storage
         const storedEmail = localStorage.getItem('user_email');
+        // Check that the email exists
+        if (!storedEmail) {
+            alert("Please log in before donating!");
+            window.location.href = "/login?error=before_donate";
+            return;
+        }
+        // Set the hidden input field to this email
         document.getElementById('email').value = storedEmail;
-
+        // Fetch the url parameters
         const urlParams = new URLSearchParams(window.location.search);
-
+        // Handle any errors indicated
         if (urlParams.get('error') == "not_found") {
-            alert("No books found");
+            alert("Sorry, we couldn't find a book matching that information.");
         }
         if (urlParams.get('title') && urlParams.get('author')) {
             document.getElementById("title").value = urlParams.get('title');
             document.getElementById("author").value = urlParams.get('author');
+
+            // Clean the URL so a refresh doesn't keep the params
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
     });
 </script>
