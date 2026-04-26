@@ -205,6 +205,30 @@ var server = http.createServer(function (req, res) {
                 await client.close();
             }
         })();
+    } else if (path == "/creditUse" && req.method == "GET") {
+        (async () => {
+            const client = new MongoClient(connStr);
+
+            try {
+                await client.connect();
+                const db = client.db("secondhand-db");
+                const collection = db.collection("users");
+
+                const donations = urlObj.query.donations;
+                const email = urlObj.query.email;
+
+                const user = await collection.findOne({ email });
+
+                await usersCollection.updateOne({ email: email }, { $set: {donations: donations}});
+                await usersCollection.updateOne({ email: email }, { $set: {credits: donations}});
+
+            } catch (error) {
+                res.writeHead(500, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ error: error.message }));
+            } finally {
+                await client.close();
+            }
+        })();
     }
     // Load the home page
     else if (path == "/catalog") {

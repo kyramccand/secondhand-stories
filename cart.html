@@ -173,9 +173,16 @@
                 </div>
             </div>
 
+            <br>
+
+            <div class="applyCredCheckbox">
+                Would you like to apply your credits to this purchase? 
+                <input type="checkbox" id="credCheck">
+            </div>
+
             <div class="btn-group">
-                <button class="clear-btn" id="clearCartBtn">Clear Cart</button>
-                <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+                <button onclick="clearCart()" class="clear-btn" id="clearCartBtn">Clear Cart</button>
+                <button onclick="handleCheckout()" class="checkout-btn" id="checkoutBtn">Checkout</button>
             </div>
             <br>
     </div>
@@ -183,11 +190,13 @@
     <script>
         let itemCount = 0;
         const storedEmail = localStorage.getItem('user_email');
+        let availableCredits = 0;
 
         fetch(`/creditInfo?email=${encodeURIComponent(storedEmail)}`)
             .then(res => res.json())
             .then(user => {
-                document.getElementById("donations").innerText = "$" + user.donations * 5;
+                document.getElementById("donations").innerText = "-$" + user.donations * 5;
+                availableCredits = user.donations * 5;
         });
 
         function displayCart() {
@@ -210,7 +219,6 @@
             
             // display if cart is not empty
             let booksHTML = '';
-            let subtotal = 0;
             
             // list books in cart
             for (let i = 0; i < items.length; i++) {
@@ -240,13 +248,13 @@
             }
         
             const taxAmount = (subtotal - discountAmount) * 0.0625;
-            const finalTotal = subtotal - discountAmount + taxAmount;
+            const currTotal = subtotal - discountAmount + taxAmount;
             
             // formatting
             const subtotalFormatted = subtotal.toFixed(2);
             const discountFormatted = discountAmount.toFixed(2);
             const taxFormatted = taxAmount.toFixed(2);
-            const totalFormatted = finalTotal.toFixed(2);
+            const totalFormatted = currTotal.toFixed(2);
             
             // display books as part of container and set receipt numbers
             container.innerHTML = booksHTML;
@@ -254,7 +262,21 @@
             document.getElementById('subtotalValue').innerHTML = `$${subtotalFormatted}`;
             document.getElementById('discountValue').innerHTML = `-$${discountFormatted}`;
             document.getElementById('taxValue').innerHTML = `$${taxFormatted}`;
-            document.getElementById('totalValue').innerHTML = `$${totalFormatted}`;
+
+            // check if donations should be applied
+            var checkBox = document.getElementById("credCheck");
+            if (checkBox.checked) {
+                if (availableCredits >= currTotal) {
+                    document.getElementById('totalValue').innerText = '$0.00';
+                    availableCredits = availableCredits - currTotal;
+                } else {
+                    let finalTotal = totalFormatted - availableCredits;
+                    document.getElementById('totalValue').innerText = `$${finalTotal}`;
+                    availableCredits = 0;
+                }
+            } else {
+                document.getElementById('totalValue').innerHTML = `$${totalFormatted}`;
+            }
         }
         
         // Clear all items from cart
@@ -280,20 +302,18 @@
                 return;
             }
 
+            availableCredits = availableCredits / 5;
 
+            const userDonations = new URLSearchParams({ email: storedEmail, donations: availableCredits });
+
+            fetch(`/useCredit?donations=${userDonations.toString()}`);
         
             alert("Proceeding to checkout!\n Thank you for shopping with us!");
         }
         
-        // render on page load and button responsiveness
+        // render on page load
         document.addEventListener('DOMContentLoaded', () => {
             displayCart();
-            
-            const clearBtn = document.getElementById('clearCartBtn');
-            if (clearBtn) clearBtn.addEventListener('click', clearCart);
-            
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            if (checkoutBtn) checkoutBtn.addEventListener('click', handleCheckout);
         });
     </script>
 </body>
