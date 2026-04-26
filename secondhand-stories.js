@@ -192,10 +192,10 @@ var server = http.createServer(function (req, res) {
                 const email = urlObj.query.email;
 
                 const user = await collection.findOne({ email: email });
-                res.status(200).json({ "Content-Type": "application/json" });
+                res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify({ donations: user.donations || 0}));
             } catch (error) {
-                res.status(200).json({ "Content-Type": "application/json" });
+                res.writeHead(500, { "Content-Type": "application/json" });
                 res.end(JSON.stringify("Error:" + error.message));
             }
             finally {
