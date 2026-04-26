@@ -194,13 +194,6 @@
         let usedCredits = 0;
         let totalUnformatted = 0;
 
-        fetch(`/creditInfo?email=${encodeURIComponent(storedEmail)}`)
-            .then(res => res.json())
-            .then(user => {
-                document.getElementById("donations").innerText = "-$" + user.donations * 5;
-                availableCredits = user.donations * 5;
-        });
-
         function displayCart() {
             // get cart from local storage and check if it's empty
             const stored = localStorage.getItem('shoppingCart');
@@ -209,6 +202,17 @@
             let subtotal = 0;
             const items = cart.items;
             const container = document.getElementById('cartItemsList');
+
+            // get credits from users db
+            fetch(`/creditInfo?email=${encodeURIComponent(storedEmail)}`)
+                .then(res => res.json())
+                .then(user => {
+                    document.getElementById("donations").innerText = "-$" + user.donations * 5;
+                    availableCredits = user.donations * 5;
+            });
+
+            document.getElementById("credCheck") = false;
+            usedCredits = 0;
             
             // display if cart is empty
             if (items.length === 0) {
@@ -319,16 +323,18 @@
             }
         }
         
-        function handleCheckout() {
+        async function handleCheckout() {
             if (itemCount == 0) {
                 alert("Your cart is empty. Add some books first.");
                 return;
             }
 
-            availableCredits = availableCredits / 5;
-            const userDonations = new URLSearchParams({ email: storedEmail, donations: availableCredits });
-
-            fetch(`/useCredit?${userDonations.toString()}`);
+            if (usedCredits > 0) {
+                availableCredits = availableCredits / 5;
+                const userDonations = new URLSearchParams({ email: storedEmail, donations: availableCredits });
+                
+                await fetch(`/useCredit?${userDonations.toString()}`);
+            }
         
             alert("Proceeding to checkout! Thank you for shopping with us!");
 
