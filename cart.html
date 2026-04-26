@@ -284,8 +284,8 @@
 
                 if (availableCredits >= totalUnformatted) {
                     document.getElementById('totalValue').innerText = '$0.00';
-                    availableCredits = availableCredits - totalUnformatted;
-                    usedCredits = totalUnformatted;
+                    availableCredits = parseFloat((availableCredits - totalUnformatted).toFixed(2));
+                    usedCredits = parseFloat(totalUnformatted.toFixed(2));
                     totalUnformatted = 0;
                     document.getElementById('donations').innerText = '-$' + usedCredits;
                 } else {

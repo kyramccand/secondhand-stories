@@ -214,7 +214,7 @@ var server = http.createServer(function (req, res) {
                 const db = client.db("secondhand-db");
                 const collection = db.collection("users");
 
-                const donations = urlObj.query.donations;
+                const donations = Math.round(parseFloat(urlObj.query.donations));
                 const email = urlObj.query.email;
 
                 const user = await collection.findOne({ email });
