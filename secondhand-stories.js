@@ -185,18 +185,37 @@ var server = http.createServer(function (req, res) {
     }
     // Load the home page
     else if (path == "/catalog") {
-        fs.readFile("catalog.html", function(err, txt) {
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            // Catch any errors
-            if (err) {
-                res.write("Error loading catalog.html");
-            } else {
-                res.write(header); // Write the pre-loaded header
-                res.write(txt);
-                res.write(footer); // Write the pre-loaded footer
-            }
-            res.end();
-        });
+        (async () => {
+        const client = new MongoClient(connStr);
+        try {
+            await client.connect();
+            const db = client.db("secondhand-db");
+            const collection = db.collection("books");
+
+            // fetch 6 books to display 
+            const results = await collection.find({}).limit(6).toArray();
+
+            //read
+            fs.readFile("catalog.html", "utf8", function(err, txt) {
+                if (err) {
+                    res.writeHead(500);
+                    res.end("Error loading catalog.html");
+                    return;
+                }
+                const data = `<script>window.myLibraryData = ${JSON.stringify(results)};</script>`;
+                const final = txt.replace('<head>', '<head>' + data);
+
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(header + final + footer); 
+            });
+        } catch (err) {
+            res.writeHead(500);
+            res.end("Database Error: " + err.message);
+        } finally {
+            
+            await client.close();
+        }
+    })();
     }
     // Load the home page
     else if (path == "/donate") {
@@ -286,6 +305,66 @@ var server = http.createServer(function (req, res) {
             res.end();
         });
     }
+    else if (path == "/process-catalog" && req.method == 'POST') {
+        let body = "";
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', async () => {
+            const formData = querystring.parse(body);
+            //connect mongodb
+            const client = new MongoClient(connStr);
+
+            try {
+                await client.connect();
+                const db = client.db("secondhand-db");
+                    
+                const collection = db.collection("books");
+
+                //allow for search to be close enough to title to pull information
+                let mongoQuery = {};
+                if (formData.title) {
+                    mongoQuery.title = new RegExp(formData.title, 'i');
+                } 
+                if (formData.author) {
+                    mongoQuery.author = new RegExp(formData.author, 'i');
+                }
+                if (formData.genre) {
+                    mongoQuery.genre = new RegExp(formData.genre, 'i');
+                }
+                if (formData.year) {
+                    mongoQuery.year = new RegExp(formData.year, 'i');
+                }
+
+                const results = await collection.find(mongoQuery).toArray();
+
+                fs.readFile("catalog.html", "utf8", function(err, txt) {
+                if (err) {
+                    res.writeHead(500);
+                    res.end("Error loading catalog");
+                    return;
+                }
+
+                //put results as global variable
+                const injectedData = `<script>window.myLibraryData = ${JSON.stringify(results)};</script>`;
+                const finalHtml = txt.replace('<head>', '<head>' + injectedData);
+
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(header + finalHtml + footer);
+            });
+
+        } catch (err) {
+            res.writeHead(500);
+            res.end("Database Error: " + err.message);
+        } finally {
+            await client.close();
+        }
+
+        });
+        return;
+    }
+    
     else if (path == "/process-donate" && req.method == 'POST') {
 
         // Get the form data
@@ -323,7 +402,9 @@ var server = http.createServer(function (req, res) {
                     author: bookData.authors?.[0] || "Unknown Author",
                     year: bookData.publishedDate?.split('-')[0] || "N/A",
                     genre: bookData.categories?.[0] || "General",
-                    isbn: isbn13 || "N/A"
+                    isbn: isbn13 || "N/A",
+                    image: bookData.imageLinks?.thumbnail || ""
+                    
                 };
 
                 // Connect to MongoDB
@@ -382,6 +463,37 @@ var server = http.createServer(function (req, res) {
         });
         return;
     }
+    else if (path == "/see-details") {
+    (async () => {
+        const bookId = urlObj.query.id;
+        const { ObjectId } = require('mongodb');
+        const client = new MongoClient(connStr);
+
+        try {
+            await client.connect();
+            const db = client.db("secondhand-db");
+            const book = await db.collection("books").findOne({ _id: new ObjectId(bookId) });
+
+            if (!book) {
+                res.writeHead(404);
+                return res.end("Book not found");
+            }
+
+            fs.readFile("see_details.html", "utf8", function(err, txt) {
+                if (err) { res.writeHead(500); return res.end("Error loading page"); }
+                const injectedData = `<script>window.selectedBook = ${JSON.stringify(book)};</script>`;
+                const finalHtml = txt.replace('<head>', '<head>' + injectedData);
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(header + finalHtml + footer);
+            });
+        } catch (err) {
+            res.writeHead(500);
+            res.end("Database Error: " + err.message);
+        } finally {
+            await client.close();
+        }
+    })();
+}
     // Load the home page
     else if (path == "/about") {
         fs.readFile("about.html", function(err, txt) {
@@ -397,6 +509,7 @@ var server = http.createServer(function (req, res) {
             res.end();
         });
     }
+    
     // Load the home page
     else if (path == "/privacy-policy") {
         fs.readFile("privacyPolicy.html", function(err, txt) {
@@ -442,6 +555,7 @@ var server = http.createServer(function (req, res) {
             res.end();
         });
     }
+    
     // For loading my styles!
     else if (path == "/style.css") {
         fs.readFile("style.css", function(err, txt) {

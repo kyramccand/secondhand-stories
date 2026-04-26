@@ -10,7 +10,6 @@
     padding: 50px 20px;
 }
 
-
 .book-card {
     background-color: white;
     border-radius: 15px;
@@ -36,9 +35,9 @@
 
 .book-image-placeholder {
     width: 240px;
-    height: 300px;
+    height: 320px;
     background-color: #dcdcdc;
-    flex-shrink: 0; 
+    
 }
 
 
@@ -63,9 +62,12 @@
     font-size: 1rem;
     cursor: pointer;
 }
+
+
     </style>
 </head>
 <body>
+
     <div class="card-container">
     <div class="book-card">
         
@@ -79,7 +81,7 @@
             <div class="book-info">
                 <p><strong>Title:</strong> <span id="info-title">Loading...</span></p>
                 <p><strong>Author:</strong> <span id="info-author">...</span></p>
-                <!--<p><strong>Publisher:</strong> Harper Lee</p>!-->
+               
                 <p><strong>Date:</strong> <span id="info-date">...</span></p>
                 <p><strong>Genre:</strong> <span id="info-genre">...</span></p>
             </div>
@@ -91,46 +93,21 @@
 
     </div>
 </div>
+
+
     <script>
-        function loadBookDetails() {
-            const params = new URLSearchParams(window.location.search);
-            const bookId = params.get("id");
+        
+        const book = window.selectedBook;
 
-            if (!bookId) {
-                document.getElementById("info-title").innerText = "No book selected.";
-                return;
-            }
-
-            const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
-            
-
-            fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                const info = data.volumeInfo;
-
-                document.getElementById("info-title").innerText = info.title || "Unknown";
-
-                let author = "Unknown";
-                if (info.authors) author = info.authors[0];
-                document.getElementById("info-author").innerText = author;
-
-                let date = "Unknown";
-                if (info.publishedDate) date = info.publishedDate.substring(0, 4);
-                document.getElementById("info-date").innerText = date;
-
-                let genre = "Unknown";
-                if (info.categories) genre = info.categories[0];
-                document.getElementById("info-genre").innerText = genre;
-
-                let cover = "";
-                if (info.imageLinks) cover = info.imageLinks.thumbnail;
-                document.getElementById("book-cover").src = cover;
-            })
-            .catch(error => console.log(error));
-        }
-
-        loadBookDetails();
+    if (!book) {
+        document.getElementById("info-title").innerText = "Book not found.";
+    } else {
+        document.getElementById("info-title").innerText = book.title || "Unknown";
+        document.getElementById("info-author").innerText = book.author || "Unknown";
+        document.getElementById("info-date").innerText = book.year || "Unknown";
+        document.getElementById("info-genre").innerText = book.genre || "Unknown";
+        document.getElementById("book-cover").src = book.image || 'images/no-cover.jpeg';
+    }
 
     </script>
 </body>

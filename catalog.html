@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,10 +12,16 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
   <style></style>
-<head>
+
     <link rel="stylesheet" href="style.css">
 
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* 100% of viewport height */
+            margin: 0;
+        }
         .header {
             text-align: center;
             margin-bottom: 6px;
@@ -27,11 +32,13 @@
             color: #000000;
             margin-bottom: 12px;
         }
+        
         .header p {
             font-size: 19px;
             color: #000000;
             max-width: 540px;
             margin: 0 auto;
+            margin-bottom: 24px;
             
         }
         .search-bar {
@@ -41,11 +48,12 @@
             display: flex;
             gap: 16px;
             align-items: center;
+            flex-direction: row;
             
             margin-left: auto;
             margin-right: auto;
             box-sizing: border-box;
-            
+            flex-shrink: 0;
             margin: 0 auto 40px auto;
             width: 100%;
             max-width: 1000px;
@@ -105,6 +113,7 @@
             align-items: start;
             max-width: 1000px;
             margin: 0 auto;
+            justify-items: center;
         }
         .book-card {
             background: #FFFFFF;
@@ -113,6 +122,8 @@
             display: flex;
             flex-direction: column;
             gap: 16px;  
+            max-width: 330px;
+            height: 100%;
             
         }
         
@@ -159,25 +170,32 @@
             padding: 10px 20px;
             width: fit-content;
             align-self: center;
-            
         }
+        
         .wrap {
-            max-width: 100%;
+            max-width: 1200px;
+            width: 100%;
             margin: 0 auto;
             padding: 40px 24px;
+            flex: 1;
+            
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 878px) {
             .catalog-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, minmax(0, 300px));
+                /* from w2 schools... https://www.w3schools.com/cssref/func_minmax.php */
+                justify-content: center;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 650px) {
             .catalog-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(0, 300px);
+                justify-content: center;
             }
         }
+
         @media (max-width: 100px) {
             .catalog-grid {
                 grid-template-columns: 1fr;
@@ -187,6 +205,7 @@
     </style>
 </head>
 <body>
+    <div class = "content">
     <div class="wrap">
         <div class="header">
             <h1>Catalog</h1>
@@ -195,241 +214,68 @@
                 library. Find your next read and give a book a new home.</p>
         </div>
 
-        <div class="search-bar">
+        
+        <form action="/process-catalog" method="POST" class="search-bar">
             <div class="search-title">
                 <label>Title</label>
-                <input type="text" id="search-title">
+                <input type="text" name="title" id="search-title">
             </div>
             <div class="search-author">
                 <label>Author</label>
-                <input type="text" id="search-author">
+                <input type="text" name="author" id="search-author">
             </div>
             <div class="search-genre">
                 <label>Genre</label>
-                <input type="text" id="search-genre">
+                <input type="text" name="genre" id="search-genre">
             </div>
             <div class="search-year">
                 <label>Year</label>
-                <input type="text" id="search-year">
+                <input type="text" name="year" id="search-year">
             </div>
-            <button class="search-btn" onclick="handleSearch()"></button>
-        </div>
+            <button type="submit" class="search-btn"></button>
+        </form>
 
         <div class="catalog-grid" id="catalog-grid">
-            <div class="book-card">
-                <img class="book-cover" id="cover-mockingbird">
-                <div class="book-info">
-                    <div class="book-title">To Kill a Mockingbird</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Harper Lee<br>
-                        <strong>Published</strong>: 1960<br>
-                        <strong>Genre</strong>: History, Fiction
-                    </div>
-                </div>
-                <a href="see_details.html?id=_eBnuQOIh-0C" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-overcoat">
-                <div class="book-info">
-                    <div class="book-title">The Overcoat</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Nikolai Gogol<br>
-                        <strong>Published</strong>: 1842<br>
-                        <strong>Genre</strong>: Classics, Fiction
-                    </div>
-                </div>
-                <a href="see_details.html?id=" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-homegoing">
-                <div class="book-info">
-                    <div class="book-title">Homegoing</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Yaa Gyasi<br>
-                        <strong>Published</strong>: 2016<br>
-                        <strong>Genre</strong>: Historical Fiction
-                    </div>
-                </div>
-                <a href="see_details.html" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-sisyphus">
-                <div class="book-info">
-                    <div class="book-title">The Myth of Sisyphus</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Albert Camus<br>
-                        <strong>Published</strong>: 1942<br>
-                        <strong>Genre</strong>: Philosophy, Classics
-                    </div>
-                </div>
-                <a href="see_details.html?id=iVV7bKVUNBAC" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-scythe">
-                <div class="book-info">
-                    <div class="book-title">Scythe</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Neal Shusterman<br>
-                        <strong>Published</strong>: 2016<br>
-                        <strong>Genre</strong>: Fantasy, Young Adult
-                    </div>
-                </div>
-                <a href="see_details.html?id=_6TAEAAAQBAJ" style="align-self: center;"><button class="details-btn">See details</button></a>
-            </div>
-
-            <div class="book-card">
-                <img class="book-cover" id="cover-circe">
-                <div class="book-info">
-                    <div class="book-title">Circe</div>
-                    <div class="book-meta">
-                        <strong>Author</strong>: Madeline Miller<br>
-                        <strong>Published</strong>: 2018<br>
-                        <strong>Genre</strong>: Fantasy, Mythology
-                    </div>
-                </div>
-                <a href="see_details.html?id=dyikEAAAQBAJ" style="align-self: center;">
-                    <button class="details-btn">See details</button>
-                </a>
-            </div>
-        </div>
+            
+    </div>
     </div>
 </body>
 <script>
+    const bookResults = window.myLibraryData || [];
+    const grid = document.getElementById('catalog-grid');
 
-    async function fetchWithRetry(url, retries = 5) {
-    for (let i = 0; i < retries; i++) {
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            if (data.items) return data;
-        } catch (error) {
-            console.log(`Attempt ${i + 1} failed, retrying...`);
-        }
-        await new Promise(resolve => setTimeout(resolve, 1000));
-    }
-    return null;
-}
-    async function handleSearch() {
-        const title = document.getElementById('search-title').value;
-        const author = document.getElementById('search-author').value;
-        const genre = document.getElementById('search-genre').value;
-        const year = document.getElementById('search-year').value;
-        const grid = document.getElementById('catalog-grid');
+    function renderCatalog() {
+        grid.innerHTML = ""; //clear the grid
 
-        grid.innerHTML = "<p style='color: black; text-align: center; grid-column: 1/-1;'>Searching...</p>";
-
-        let query = "";
-        if (title) query += `intitle:${title}+`;
-        if (author) query += `inauthor:${author}+`;
-        if (genre) query += `subject:${genre}+`;
-        if (year) query += `${year}+`;
-
-        
-        if (!query) {
-            grid.innerHTML = "";
+        if (bookResults.length === 0) {
+            grid.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>No books found in our library. Try a different search!</p>";
             return;
         }
 
-        const cleanQuery = query.slice(0, -1); //meant to clean up the above querying
-        
-        const apiKey = "AIzaSyDJV8TYoGmFA0aNY2wQ-NVyMIiTtIhjMiQ"; 
-        const api = "AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA";
-        const url = `https://www.googleapis.com/books/v1/volumes?q=${cleanQuery}&maxResults=12&key=${api}`;
+        bookResults.forEach(book => {
+            // use the image saved in DB
+            const coverSrc = book.image || 'images/no-cover.jpeg';
 
-        const data = await fetchWithRetry(url);
-
-        if (!data) {
-            grid.innerHTML = "<p style='text-align: center; grid-column: 1/-1;'>Failed to load results. Please try again.</p>";
-            return;
-        }
-
-        grid.innerHTML = "";
-        
-
-        if (data.items) {
-            data.items.forEach(book => {
-                const info = book.volumeInfo;
-                const bTitle = info.title || "Unknown";
-
-                let bAuthor = "Unknown Author";
-                if (info.authors) bAuthor = info.authors[0];
-
-                let bYear = "N/A";
-                if (info.publishedDate) bYear = info.publishedDate.substring(0, 4);
-
-                let bGenre = "General";
-                if (info.categories) bGenre = info.categories[0];
-
-                let bCover = "";
-                if (info.imageLinks) bCover = info.imageLinks.thumbnail;
-                let bookID = book.id;
-                grid.innerHTML += `
-                    <div class="book-card">
-                        <img class="book-cover" src="${bCover}">
-                        <div class="book-info">
-                            <div class="book-title">${bTitle}</div>
-                            <div class="book-meta">
-                                <strong>Author</strong>: ${bAuthor}<br>
-                                <strong>Published</strong>: ${bYear}<br>
-                                <strong>Genre</strong>: ${bGenre}
-                            </div>
+            grid.innerHTML += `
+                <div class="book-card">
+                    <img class="book-cover" src="${coverSrc}" alt="${book.title}">
+                    <div class="book-info">
+                        <div class="book-title">${book.title}</div>
+                        <div class="book-meta">
+                            <strong>Author</strong>: ${book.author}<br>
+                            <strong>Published</strong>: ${book.year}<br>
+                            <strong>Genre</strong>: ${book.genre}
                         </div>
-                        <a href="see_details.html?id=${book.id}" style="align-self: center; text-decoration: none;">
-                            <button class="details-btn">See details</button>
-                        </a>
                     </div>
-                `;
-            });
-        } else {
-            grid.innerHTML = "<p style='color: white; text-align: center; grid-column: 1/-1;'>No results found.</p>";
-        }
-    }
-
-    function loadCovers() {
-        const books = [
-            { isbn: "9780446310789", imgId: "cover-mockingbird" },
-            { isbn: "9781473322288", imgId: "cover-overcoat" },
-            { isbn: "9781101971062", imgId: "cover-homegoing" },
-            { isbn: "9780679720201", imgId: "cover-sisyphus" },
-            { isbn: "9781442472433", imgId: "cover-scythe" },
-            { isbn: "9780316556347", imgId: "cover-circe" },
-        ];
-
-        books.forEach((book, index) => {
-            const cacheKey = `book-cover-${book.isbn}`;
-            const cached = localStorage.getItem(cacheKey);
-
-            if (cached) {
-                const el = document.getElementById(book.imgId);
-                if(el) el.src = cached;
-            } else {
-                setTimeout(() => {
-                    const apiKey = "AIzaSyDJV8TYoGmFA0aNY2wQ-NVyMIiTtIhjMiQ";
-                    const api = "AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA";
-                    const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}&key=${api}`;
-                    
-                    fetch(url)
-                    .then(res => res.json()) 
-                    .then(data => {
-                        if (data && data.items) {
-                            const thumbnail = data.items[0].volumeInfo.imageLinks?.thumbnail;
-                            if (thumbnail) {
-                                localStorage.setItem(cacheKey, thumbnail);
-                                const el = document.getElementById(book.imgId);
-                                if(el) el.src = thumbnail;
-                            }
-                        }
-                    })
-                    .catch(error => console.log(error));
-                }, index * 300);
-            }
+                    <a href="see-details?id=${book._id}" style="align-self: center; text-decoration: none;">
+                        <button class="details-btn">See details</button>
+                    </a>
+                </div>
+            `;
         });
     }
 
-    loadCovers();
+    // Run when page loads
+    renderCatalog();
 </script>
 </html>
