@@ -211,7 +211,7 @@
                     availableCredits = user.donations * 5;
             });
 
-            document.getElementById("credCheck") = false;
+            document.getElementById("credCheck").checked = false;
             usedCredits = 0;
             
             // display if cart is empty
@@ -332,7 +332,7 @@
             if (usedCredits > 0) {
                 availableCredits = availableCredits / 5;
                 const userDonations = new URLSearchParams({ email: storedEmail, donations: availableCredits });
-                
+
                 await fetch(`/useCredit?${userDonations.toString()}`);
             }
         
