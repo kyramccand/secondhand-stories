@@ -205,7 +205,7 @@ var server = http.createServer(function (req, res) {
                 await client.close();
             }
         })();
-    } else if (path == "/creditUse" && req.method == "GET") {
+    } else if (path == "/useCredit" && req.method == "GET") {
         (async () => {
             const client = new MongoClient(connStr);
 

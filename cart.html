@@ -177,7 +177,7 @@
 
             <div class="applyCredCheckbox">
                 Would you like to apply your credits to this purchase? 
-                <input type="checkbox" id="credCheck">
+                <input type="checkbox" id="credCheck" onclick="applyCreds()">
             </div>
 
             <div class="btn-group">
@@ -191,6 +191,7 @@
         let itemCount = 0;
         const storedEmail = localStorage.getItem('user_email');
         let availableCredits = 0;
+        let totalUnformatted = 0;
 
         fetch(`/creditInfo?email=${encodeURIComponent(storedEmail)}`)
             .then(res => res.json())
@@ -204,6 +205,7 @@
             const stored = localStorage.getItem('shoppingCart');
             const cart = stored ? JSON.parse(stored) : { items: [] };
 
+            let subtotal = 0;
             const items = cart.items;
             const container = document.getElementById('cartItemsList');
             
@@ -248,13 +250,14 @@
             }
         
             const taxAmount = (subtotal - discountAmount) * 0.0625;
-            const currTotal = subtotal - discountAmount + taxAmount;
+            const finalTotal = subtotal - discountAmount + taxAmount;
             
             // formatting
             const subtotalFormatted = subtotal.toFixed(2);
             const discountFormatted = discountAmount.toFixed(2);
             const taxFormatted = taxAmount.toFixed(2);
-            const totalFormatted = currTotal.toFixed(2);
+            const totalFormatted = finalTotal.toFixed(2);
+            totalUnformatted = finalTotal;
             
             // display books as part of container and set receipt numbers
             container.innerHTML = booksHTML;
@@ -262,21 +265,27 @@
             document.getElementById('subtotalValue').innerHTML = `$${subtotalFormatted}`;
             document.getElementById('discountValue').innerHTML = `-$${discountFormatted}`;
             document.getElementById('taxValue').innerHTML = `$${taxFormatted}`;
+            document.getElementById('totalValue').innerHTML = `$${totalFormatted}`;
+        }
+
+        function applyCreds() {
+            if (itemCount == 0) {
+                alert("Select books to apply credits.");
+                return;
+            }
 
             // check if donations should be applied
-            var checkBox = document.getElementById("credCheck");
-            if (checkBox.checked) {
-                if (availableCredits >= currTotal) {
-                    document.getElementById('totalValue').innerText = '$0.00';
-                    availableCredits = availableCredits - currTotal;
-                } else {
-                    let finalTotal = totalFormatted - availableCredits;
-                    document.getElementById('totalValue').innerText = `$${finalTotal}`;
-                    availableCredits = 0;
-                }
+            if (availableCredits >= totalUnformatted) {
+                document.getElementById('totalValue').innerText = '$0.00';
+                availableCredits = availableCredits - totalUnformatted;
             } else {
-                document.getElementById('totalValue').innerHTML = `$${totalFormatted}`;
+                totalUnformatted = totalUnformatted - availableCredits;
+                const newTotal = totalUnformatted.toFixed(2);
+                document.getElementById('totalValue').innerText = `$${newTotal}`;
+                availableCredits = 0;
             }
+
+
         }
         
         // Clear all items from cart
