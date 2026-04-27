@@ -336,6 +336,12 @@
                 return;
             }
 
+            const confirmCheckout = confirm("Are you sure you want to proceed to checkout?");
+            if (!confirmCheckout) {
+                alert("Checkout canceled.");
+                return;
+            }
+
             if (usedCredits > 0) {
                 availableCredits = availableCredits / 5;
                 const userDonations = new URLSearchParams({ email: storedEmail, donations: availableCredits });
@@ -354,13 +360,10 @@
 
                 await fetch(`/updateLibrary?title=${encodeURIComponent(title)}`);
             }
-        
-            alert("Proceeding to checkout! Thank you for shopping with us!");
 
             // clear cart w/o alert
             const emptyCart = { items: [] };
             localStorage.setItem('shoppingCart', JSON.stringify(emptyCart));
-            displayCart();
 
             const stripeResponse = await fetch(`/processCheckout?totalItems=${encodeURIComponent(itemCount)}`);
             const stripePage = await stripeResponse.json();
