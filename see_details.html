@@ -8,6 +8,8 @@
     display: flex;
     justify-content: center;
     padding: 50px 20px;
+    align-items: center;
+    min-height: 80vh; 
 }
 
 .book-card {
@@ -62,10 +64,12 @@
 }
 
 
+
+
     </style>
 </head>
 <body>
-
+    <div class="content">
     <div class="card-container">
     <div class="book-card">
         
@@ -84,6 +88,7 @@
                 <p><strong>Genre:</strong> <span id="info-genre">...</span></p>
             </div>
         </div>
+        
 
         <div class="card-footer">
             <button onclick="addToCart()" class="cart-btn">Add to Cart</button>
@@ -92,6 +97,7 @@
     </div>
 </div>
 
+</div>
 
     <script>
         
@@ -145,5 +151,5 @@
             window.location.href = "./catalog";
         }
     </script>
-</body>
-</html>
+<!-- </body>
+</html> -->
