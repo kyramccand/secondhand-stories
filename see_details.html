@@ -128,13 +128,12 @@
                 cart = JSON.parse(cart);
             }
 
-            cart.forEach((item, index) => {
-                if (window.currentBook.title == item.title) {
-                    alert("At Secondhand Stories we value reusing existing books, and stand against overconsumption. For this reason we enforce that if a user wants to purchase multiple copies of the same book, they do so across multiple sessions to have more time to reflect on the pros of purchasing a new book as opposed to sharing copies");
-                    return;
-                }
-            });
-
+            // enforce customer cannot order two of the same books in one session
+            const duplicateCheck = cart.items.some(item => item.title == window.currentBook.title);
+            if (duplicateCheck) {
+                alert("At Secondhand Stories we value reusing existing books, and stand against overconsumption. For this reason we enforce that if a user wants to purchase multiple copies of the same book, they do so across multiple sessions to have more time to reflect on the pros of purchasing a new book as opposed to sharing copies");
+                return;
+            }
 
             // add book to cart
             cart.items.push({
