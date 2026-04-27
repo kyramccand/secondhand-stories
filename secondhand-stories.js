@@ -243,7 +243,7 @@ var server = http.createServer(function (req, res) {
 
             const title = urlObj.query.title;
 
-            collection.deleteOne({ title: title });
+            await collection.deleteOne({ title: title });
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ success: true }));
         } catch (err) {
