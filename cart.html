@@ -242,8 +242,8 @@
             for (let i = 0; i < items.length; i++) {
                 const book = items[i];
                 
-                const title = book.title || 'Unknown Title';
-                const author = book.author || 'Unknown Author';
+                const title = book.title;
+                const author = book.author;
                 subtotal += 5;
                 
                 booksHTML += `
@@ -322,7 +322,7 @@
 
         function removeItem(index) {
             let cart = JSON.parse(localStorage.getItem('shoppingCart'));
-            cart.items.splice(index, true);
+            cart.items.splice(index, 1);
 
             localStorage.setItem('shoppingCart', JSON.stringify(cart));
             displayCart();
@@ -355,6 +355,14 @@
                 const userDonations = new URLSearchParams({ email: storedEmail, donations: availableCredits });
 
                 await fetch(`/useCredit?${userDonations.toString()}`);
+            }
+
+            // remove purchased books from collection
+            for (let i = 0; i < items.length; i++) {
+                const book = items[i];
+                const title = book.title;
+
+                fetch(`/updateLibrary?title=${encodeURIComponent(title)}`);
             }
         
             alert("Proceeding to checkout! Thank you for shopping with us!");

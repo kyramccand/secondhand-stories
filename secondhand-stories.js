@@ -205,7 +205,8 @@ var server = http.createServer(function (req, res) {
                 await client.close();
             }
         })();
-    } else if (path == "/useCredit" && req.method == "GET") {
+    } 
+    else if (path == "/useCredit" && req.method == "GET") {
         (async () => {
             const client = new MongoClient(connStr);
 
@@ -231,6 +232,25 @@ var server = http.createServer(function (req, res) {
                 await client.close();
             }
         })();
+    }
+    else if (path == "/updateLibrary" && req.method == "GET") {
+        (async () => {
+        const client = new MongoClient(connStr);
+        try {
+            await client.connect();
+            const db = client.db("secondhand-db");
+            const collection = db.collection("books");
+
+            const title = urlObj.query.title;
+
+            db.collection.deleteOne({ title: title });
+        } catch (err) {
+            res.writeHead(500);
+            res.end("Database Error: " + err.message);
+        } finally {
+            await client.close();
+        }
+    })();
     }
     // Load the home page
     else if (path == "/catalog") {
