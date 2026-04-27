@@ -185,7 +185,9 @@ var server = http.createServer(function (req, res) {
             }
             res.end();
         });
-    } else if (path == "/creditInfo" && req.method == "GET") {
+    } 
+    // get info on a user's num of credits
+    else if (path == "/creditInfo" && req.method == "GET") {
         (async () => {
             const client = new MongoClient(connStr);
 
@@ -194,8 +196,10 @@ var server = http.createServer(function (req, res) {
                 const db = client.db("secondhand-db");
                 const collection = db.collection("users");
 
+                // get user/email from query string
                 const email = urlObj.query.email;
 
+                // search and return their donation info
                 const user = await collection.findOne({ email });
 
                 res.writeHead(200, { "Content-Type": "application/json" });
@@ -218,6 +222,7 @@ var server = http.createServer(function (req, res) {
                 const db = client.db("secondhand-db");
                 const collection = db.collection("users");
 
+                // get the user and their new amount of donation credits to update
                 const donations = Math.round(parseFloat(urlObj.query.donations));
                 const email = urlObj.query.email;
 
@@ -236,6 +241,7 @@ var server = http.createServer(function (req, res) {
             }
         })();
     }
+    // remove books in cart from our library
     else if (path == "/updateLibrary" && req.method == "GET") {
         (async () => {
         const client = new MongoClient(connStr);
@@ -246,6 +252,7 @@ var server = http.createServer(function (req, res) {
 
             const title = urlObj.query.title;
 
+            // search for book then remove it
             const book = await db.collection("books").findOne({ title: title });
 
             if (!book) {
@@ -254,6 +261,7 @@ var server = http.createServer(function (req, res) {
             }
 
             await collection.deleteOne({ title: title });
+
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ success: true }));
         } catch (err) {
@@ -264,6 +272,7 @@ var server = http.createServer(function (req, res) {
         }
     })();
     }
+    // process the checkout via stripe
     else if (path == "/processCheckout" && req.method == "GET") {
         (async () => {
             try {
@@ -285,10 +294,13 @@ var server = http.createServer(function (req, res) {
                     },
                   ],
                   mode: 'payment',
+
+                  // landing pages for after payment
                   success_url: 'https://my-vers-secondhand-stories-030008331aee.herokuapp.com/home',
                   cancel_url: 'https://my-vers-secondhand-stories-030008331aee.herokuapp.com/cart',
                 });
 
+                // return the unique checkout link stripe creates for each purchase (auto loaded in front end)
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify({stripeURL: session.url}));
             } catch (error) {
