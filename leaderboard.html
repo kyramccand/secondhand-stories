@@ -47,8 +47,6 @@
       }
 
       .podium-name {
-        font-family: "Trebuchet MS", Arial, sans-serif;
-        font-size: 15px;
         color: #1b4332;
         text-align: center;
         margin-bottom: 6px;
@@ -62,7 +60,6 @@
         background: #ffffff;
         font-family: Cambria, Georgia, serif;
         font-weight: 700;
-        color: #081c15;
         border-radius: 4px 4px 0 0;
       }
 
@@ -136,6 +133,14 @@
         font-family: "Trebuchet MS", Arial, sans-serif;
         font-size: 15px;
         padding: 20px;
+      }
+
+      .donations-count {
+        color: #1b4332;
+        width: 100%;
+        text-align: center;
+        background: #ffffff;
+        padding: 30px;
       }
 
       @media (max-width: 768px) {
@@ -213,10 +218,12 @@
             .map((donor, i) => {
               if (!donor) return ""; // fewer than 3 donors
               const name = donor.firstName + " " + donor.lastName;
+              const numDonations = donor.donations;
               return `
                         <div class="podium-place ${podiumClasses[i]}">
                             <div class="podium-name">${escapeHtml(name)}</div>
                             <div class="podium-block">${medals[i]}</div>
+                            <div class="donations-count">Dontaions: ${numDonations}</div>
                         </div>`;
             })
             .join("");
