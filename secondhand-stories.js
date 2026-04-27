@@ -7,6 +7,9 @@ var port = process.env.PORT || 3000;
 
 const MongoClient = require('mongodb').MongoClient;
 const connStr = "mongodb+srv://login_user:db123@leaderboard.gw09mzd.mongodb.net/?appName=leaderboard";
+
+const stripe = require('stripe')('sk_test_51TQgpnJCbaB2R6Vgq3VCznggWkj39qLx8Seu1XRdeqNDNtK5i4smae3uaLwcB1OzYgiXLsCwekkd1VZBONmWsxVm00e6gfZSS0');
+
 // The header and footer to include on every page
 const header = fs.readFileSync("header.html", "utf8");
 const footer = fs.readFileSync("footer.html", "utf8");
@@ -267,8 +270,6 @@ var server = http.createServer(function (req, res) {
                 const totalItems = parseInt(urlObj.query.totalItems);
 
                 // NOTE: this is the stripe checkout blueprint, provided by stripe (they do price in cents for some reason)
-                const stripe = require('stripe')('sk_test_51TQgpnJCbaB2R6Vgq3VCznggWkj39qLx8Seu1XRdeqNDNtK5i4smae3uaLwcB1OzYgiXLsCwekkd1VZBONmWsxVm00e6gfZSS0');
-
                 const session = await stripe.checkout.sessions.create({
                     line_items: [
                     {

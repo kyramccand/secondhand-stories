@@ -11,6 +11,7 @@
     "dev": "node --watch secondhand-stories.js"
   },
   "dependencies": {
-    "mongodb": "^4.0"
+    "mongodb": "^4.0",
+    "stripe": "^15.0.0"
   }
 }
