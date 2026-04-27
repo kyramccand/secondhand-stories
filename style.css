@@ -46,12 +46,13 @@ body {
 }
 
 .navBar {
+    position: relative;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1B4332;
-    color: #E9EED9;
+    background-color: #1b4332;
+    color: #e9eed9;
     padding: 10px;
     flex-shrink: 0;
     width: 100%;
@@ -459,6 +460,49 @@ input {
 
     .description {
         width: 90%;
+    }
+
+    /* Hamburger menu shows up on mobile or any small screen */
+  .navLinks.hamburger {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    position: absolute;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 0px;
+    top: 100%;
+    left: 0px;
+    z-index: 999;
+    background: #1B4332;
+  }
+
+  .navLinks.open {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    gap: 16px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #1b4332;
+    z-index: 999;
+    min-height: 220px;
+    }
+
+
+  .navLinks {
+    transition: all 0.3s ease;
+    }
+
+  /* Hamburger menu shows up on mobile or any small screen */
+  .navLinks.hamburger {
+    background: #1B4332;
+    z-index: 1000;
+    flex-shrink: 0;
     }
 
 }
