@@ -1,140 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="keywords" content="secondhand books, affordable books, book donations, global literacy, sustainability" />
-    <meta name="description" content="View your shopping cart and manage your selected books." />
-    <title>Cart</title>
-    <link rel="stylesheet" href="style.css">
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 
-    .cart-page {
-            background: #E9EED9;
-            min-height: 80vh;
+    <style>
+        .cart-container {
+            width: 700px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px 35px;
+            margin-bottom: 30px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 40px 20px 60px;
-        }
-
-    .cart-subtitle {
-        font-family: 'Trebuchet MS', Arial, sans-serif;
-        font-size: 16px;
-        color: #1B4332;
-        text-align: center;
-        margin: 0 0 36px;
-    }
-    
-    .order-summary-card {
-            background: #ffffff;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 580px;
-            padding: 40px 50px 50px;
-        }
-
-    .order-summary-card h3 {
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        font-size: 28px;
-        color: #081C15;
-        text-align: center;
-        margin: 0 0 32px;
-        font-weight: 400;
-    }
-
-    .order-lines {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            margin-bottom: 0;
-        }
- 
-        .order-line {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Trebuchet MS', Arial, sans-serif;
-            font-size: 16px;
-            color: #1B4332;
-            padding: 10px 0;
-        }
- 
-        .order-divider {
-            border: none;
-            border-top: 1px solid #c8d5bc;
-            margin: 8px 0;
-        }
- 
-        .order-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Trebuchet MS', Arial, sans-serif;
-            font-size: 18px;
-            font-weight: 600;
-            color: #081C15;
-            padding: 12px 0 0;
-        }
- 
-        .confirm-btn-wrapper {
-            display: flex;
             justify-content: center;
-            margin-top: 48px;
+            align-items: center;
+            text-align: center;
         }
- 
-        .confirm-btn-wrapper button {
-            width: 160px;
-            height: 48px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 10px;
+
+        .price-x-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
         }
- 
+
         @media (max-width: 768px) {
-            .order-summary-card { padding: 28px 24px 36px; }
+            .cart-container {
+                width: 90%;
+            }
+
         }
-          
-  </style>
+
+    </style>
 </head>
 <body>
     <div class="content">
-        <div class="cart-page">
-            <h2>Cart</h2>
-            <div class="cart-subtitle">
-                Finalizing your collection...you’re just a few clicks away from owning these books!
-            </div>
+        <div class="page-center-container">
+        <h1>Cart</h1>
+        <p class="description">Finalizing your collection... you're just a few clicks away from owning these books!</p>
+        <div class="cart-container">
+            <h2>Order Summary</h2>
 
-            <div class="order-summary-card">
-                <h3>Order Summary</h3>
+            <!-- books in cart -->
+            <div id="cartItemsList" class="cart-items"></div>
 
-            <div class="order-lines">
-                <div class="order-line">
+            <!-- receipt -->
+            <div class="summary">
+                <div class="summary-line">
                     <span>Subtotal:</span>
-                    <span>$XX.XX</span>
+                    <span id="subtotalValue">$0.00</span>
                 </div>
-                <div class="order-line">
-                    <span>Volume Discount ():</span>
-                    <span>$XX.XX</span>
+                <div class="summary-line" id="discountRow">
+                    <span>Volume Discount (10% off for 5+ books):</span>
+                    <span id="discountValue">-$0.00</span>
                 </div>
-                <div class="order-line">
-                    <span>Donation Credits ():</span>
-                    <span>$XX.XX</span>
+                <div class="summary-line" id="creditRow">
+                    <span>Credits Available:</span>
+                    <span id="donations">-$0.00</span>
                 </div>
-                <div class="order-line">
-                    <span>Tax (6.25%):</span>
-                    <span>$XX.XX</span>
+                <div class="summary-line">
+                    <span>Tax:</span>
+                    <span id="taxValue">$0.00</span>
+                </div>
+                <div class="total-line">
+                    <span>Total:</span>
+                    <span id="totalValue">$0.00</span>
+                </div>
+                <br>
+                <div class="apply-credits-checkbox">
+                    Would you like to apply your credits to this purchase? 
+                    <input type="checkbox" id="credCheck" onclick="applyCreds()">
                 </div>
             </div>
-            <hr class="order-divider" />
+
             
 
-            <div class=" confirm-btn-wrapper">
-                <a href="index.html"><button>Checkout</button></a> 
-                <!-- just for now --></div>
-            
+            <div class="btn-group">
+                <button onclick="clearCart()" class="clear-btn" id="clearCartBtn">Clear Cart</button>
+                <button onclick="handleCheckout()" class="checkout-btn" id="checkoutBtn">Checkout</button>
+            </div>
+            <br>
         </div>
     </div>
+
+    <script>
+        // set global variables
+        let itemCount = 0;
+        const storedEmail = localStorage.getItem('user_email');
+        let availableCredits = 0;
+        let usedCredits = 0;
+        let totalUnformatted = 0;
+
+        function displayCart() {
+            // get cart from local storage
+            const stored = localStorage.getItem('shoppingCart');
+            const cart = stored ? JSON.parse(stored) : { items: [] };
+
+            let subtotal = 0;
+            const items = cart.items;
+            const container = document.getElementById('cartItemsList');
+
+            // get credits from users db
+            fetch(`/creditInfo?email=${encodeURIComponent(storedEmail)}`)
+                .then(res => res.json())
+                .then(user => {
+                    document.getElementById("donations").innerText = "-$" + user.donations * 5;
+                    availableCredits = user.donations * 5;
+            });
+
+            // set box as unticked, this is mostly for reload on clearing, 
+            // it is a little annoying when removing an item tho,
+            // NOTE to self ask group what they think
+            document.getElementById("credCheck").checked = false;
+            usedCredits = 0;
+            
+            // empty display
+            if (items.length === 0) {
+                container.innerHTML = `<div style='text-align: center'>Your cart is empty.<br>Add some great books from the store!</div>`;
+                document.getElementById('subtotalValue').innerText = '$0.00';
+                document.getElementById('discountValue').innerText = '-$0.00';
+                document.getElementById('taxValue').innerText = '$0.00';
+                document.getElementById('totalValue').innerText = '$0.00';
+                return;
+            }
+            
+
+            let booksHTML = '';
+            
+            // list books in cart
+            for (let i = 0; i < items.length; i++) {
+                const book = items[i];
+                
+                const title = book.title;
+                const author = book.author;
+                subtotal += 5;
+                
+                // idk how to comment in line for this but on the button give the cart index
+                // of the book to the remove function so it will be take from cart
+                booksHTML += `
+                    <div class="cart-item">
+                        <div class="book-details">
+                            <div>
+                                <div class="book-title">${title}</div>
+                                <div class="book-author">by ${author}</div>
+                            </div>
+                            <div class="price-x-container">
+                                <div>$5</div>
+                                <div>
+                                    <button onclick="removeItem(${i})" class="remove-btn"><i class="fa-solid fa-x"></i></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // apply volume discount if needed
+            itemCount = items.length;
+            let discountAmount = 0;
+            
+            if (itemCount >= 5) {
+                discountAmount = subtotal * 0.1;
+            }
+        
+            const taxAmount = (subtotal - discountAmount) * 0.0625;
+            const finalTotal = subtotal - discountAmount + taxAmount;
+            
+            const subtotalFormatted = subtotal.toFixed(2);
+            const discountFormatted = discountAmount.toFixed(2);
+            const taxFormatted = taxAmount.toFixed(2);
+            const totalFormatted = finalTotal.toFixed(2);
+            totalUnformatted = finalTotal;
+            
+            // display books as part of container and set receipt numbers
+            container.innerHTML = booksHTML;
+            
+            document.getElementById('subtotalValue').innerHTML = `$${subtotalFormatted}`;
+            document.getElementById('discountValue').innerHTML = `-$${discountFormatted}`;
+            document.getElementById('taxValue').innerHTML = `$${taxFormatted}`;
+            document.getElementById('totalValue').innerHTML = `$${totalFormatted}`;
+        }
+
+        // apply credits if the user wishes
+        function applyCreds() {
+            var checkBox = document.getElementById("credCheck");
+
+            if (checkBox.checked) {
+              if (itemCount == 0) {
+                alert("Select books to apply credits.");
+                return;
+                }
+
+                // update available and used credits based on the amount of user credits to total
+                if (availableCredits >= totalUnformatted) {
+                    document.getElementById('totalValue').innerText = '$0.00';
+                    availableCredits = parseFloat((availableCredits - totalUnformatted).toFixed(2));
+                    usedCredits = parseFloat(totalUnformatted.toFixed(2));
+                    totalUnformatted = 0;
+                    document.getElementById('donations').innerText = '-$' + availableCredits;
+                } 
+                else {
+                    totalUnformatted = totalUnformatted - availableCredits;
+                    const newTotal = totalUnformatted.toFixed(2);
+                    document.getElementById('totalValue').innerText = `$${newTotal}`;
+                    usedCredits = availableCredits;
+                    availableCredits = 0;
+                    document.getElementById('donations').innerText = '-$0.00';
+                }
+            } else {
+                totalUnformatted = totalUnformatted + usedCredits;
+                const newTotal = totalUnformatted.toFixed(2);
+                document.getElementById('totalValue').innerText = `$${newTotal}`;
+                availableCredits = availableCredits + usedCredits;
+                usedCredits = 0;
+                document.getElementById('donations').innerText = '-$' + availableCredits;
+            }
+        }
+
+        // remove item from cart given index of said item
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('shoppingCart'));
+            cart.items.splice(index, 1);
+
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+            displayCart();
+        }
+        
+        function clearCart() {
+            if (itemCount == 0) {
+                alert("Cart is already empty.");
+                return;
+            }
+        
+            // verify what user wants then clear cart and refresh
+            const confirmClear = confirm("Are you sure you want to remove all books from your cart?");
+            if (confirmClear) {
+                const emptyCart = { items: [] };
+                localStorage.setItem('shoppingCart', JSON.stringify(emptyCart));
+                displayCart();
+                alert("Cart cleared successfully.");
+            }
+        }
+        
+        async function handleCheckout() {
+            if (itemCount == 0) {
+                alert("Your cart is empty. Add some books first.");
+                return;
+            }
+
+            const confirmCheckout = confirm("Are you sure you want to proceed to checkout?");
+            if (!confirmCheckout) {
+                alert("Checkout canceled.");
+                return;
+            }
+
+            // convert $ discount back to credit/donation units and update user db with new credit total
+            if (usedCredits > 0) {
+                availableCredits = availableCredits / 5;
+                const userDonations = new URLSearchParams({ email: storedEmail, donations: availableCredits });
+
+                await fetch(`/useCredit?${userDonations.toString()}`);
+            }
+
+            // remove each item being purchased from our library
+            const stored = localStorage.getItem('shoppingCart');
+            const cart = JSON.parse(stored);
+            const items = cart.items;
+
+            for (let i = 0; i < items.length; i++) {
+                const book = items[i];
+                const title = book.title;
+
+                await fetch(`/updateLibrary?title=${encodeURIComponent(title)}`);
+            }
+
+            const emptyCart = { items: [] };
+            localStorage.setItem('shoppingCart', JSON.stringify(emptyCart));
+
+            // load stripe checkout
+            const stripeResponse = await fetch(`/processCheckout?totalItems=${encodeURIComponent(itemCount)}`);
+            const stripePage = await stripeResponse.json();
+            window.location.href = stripePage.stripeURL;
+        }
+        
+        // render on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayCart();
+        });
+    </script>
 </body>
 </html>

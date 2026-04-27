@@ -37,7 +37,6 @@
     width: 240px;
     height: 320px;
     background-color: #dcdcdc;
-    
 }
 
 
@@ -57,9 +56,8 @@
 .cart-btn {
     background-color: #f4be52; 
     border: none;
-    padding: 10px 40px;
+    padding: 10px;
     border-radius: 8px;
-    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -88,7 +86,7 @@
         </div>
 
         <div class="card-footer">
-            <button class="cart-btn">Add to Cart</button>
+            <button onclick="addToCart()" class="cart-btn">Add to Cart</button>
         </div>
 
     </div>
@@ -99,16 +97,52 @@
         
         const book = window.selectedBook;
 
-    if (!book) {
-        document.getElementById("info-title").innerText = "Book not found.";
-    } else {
-        document.getElementById("info-title").innerText = book.title || "Unknown";
-        document.getElementById("info-author").innerText = book.author || "Unknown";
-        document.getElementById("info-date").innerText = book.year || "Unknown";
-        document.getElementById("info-genre").innerText = book.genre || "Unknown";
-        document.getElementById("book-cover").src = book.image || 'images/no-cover.jpeg';
-    }
+        if (!book) {
+            document.getElementById("info-title").innerText = "Book not found.";
+        } else {
+            const bookData = {
+                title: document.getElementById("info-title").innerText = book.title || "Unknown",
+                author: document.getElementById("info-author").innerText = book.author || "Unknown",
+                pubDate: document.getElementById("info-date").innerText = book.year || "Unknown",
+                genre: document.getElementById("info-genre").innerText = book.genre || "Unknown",
+                cover: document.getElementById("book-cover").src = book.image || 'images/no-cover.jpeg',
+            };
 
+            window.currentBook = bookData;
+        }
+
+        function addToCart() {
+            if (!window.currentBook) {
+                alert('The book is still loading. Please wait.');
+                return;
+            }
+
+            // Get existing cart or create one if it doesn't exist
+            let cart = localStorage.getItem('shoppingCart');
+
+            if (!cart) {
+                cart = { items: []};
+            } else {
+                cart = JSON.parse(cart);
+            }
+
+            // enforce customer cannot order two of the same books in one session
+            const duplicateCheck = cart.items.some(item => item.title == window.currentBook.title);
+            if (duplicateCheck) {
+                alert("At Secondhand Stories we value reusing existing books, and stand against overconsumption. For this reason we enforce that if a user wants to purchase multiple copies of the same book, they do so across multiple sessions to have more time to reflect on the pros of purchasing a new book as opposed to sharing copies");
+                return;
+            }
+
+            // add book to cart
+            cart.items.push({
+                title: window.currentBook.title,
+                author: window.currentBook.author,
+            });
+
+            // save cart to local storage
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+            alert(`${window.currentBook.title} added to cart!`);
+        }
     </script>
 </body>
 </html>
