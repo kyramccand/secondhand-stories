@@ -113,23 +113,19 @@ body {
 }
 
 .circle {
-  border-radius: 100px;
+  border-radius: 50%;
   width: 55px;
   height: 55px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(#FFB703);
-  box-shadow: var(#E9EED9) 0px 2px 4px;
   cursor: pointer;
 }
 
 .circle:hover {
   background-color: var(#1B4332);
 }
-
-
-
 
 footer {
     width: 100%;
@@ -256,6 +252,7 @@ input {
 /* book list styles */
         .cart-items {
             margin: 20px 0;
+            width: 80%;
         }
 
         .cart-item {
@@ -267,13 +264,16 @@ input {
         }
 
         .book-details {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
             flex: 2;
+            text-align: left;
         }
 
         .book-title {
             font-weight: 600;
             color: #1e3a2f;
-            font-size: 16px;
         }
 
         .book-author {
@@ -284,6 +284,7 @@ input {
 
         /* summary section */
         .summary {
+            width: 80%;
             margin-top: 25px;
             background: #fafaf5;
             padding: 20px 20px;
@@ -315,15 +316,6 @@ input {
             margin-top: 30px;
         }
 
-        button {
-            padding: 10px 28px;
-            font-size: 15px;
-            font-weight: 600;
-            border: none;
-            border-radius: 40px;
-            cursor: pointer;
-        }
-
         .clear-btn {
             background-color: #f0e2d0;
             color: #7c4a2b;
@@ -343,13 +335,19 @@ input {
         }
 
         .remove-btn {
-            width: 80px;
-            height: 60px;
-            margin-left: 10px;
+            height: 55px;
+            width: 55px;
+            border-radius: 50%;
             cursor: pointer;
         }
 
+        .description {
+            width: 70%;
+            text-align: center;
+        }
+
 @media (max-width: 768px) {
+
   .navbar {
     position: relative;
   }
@@ -437,7 +435,7 @@ input {
     font-size: 20px !important;
   }
 
-  p {
+  p, div {
     font-size: 14px !important;
   }
 
@@ -457,6 +455,10 @@ input {
 
     .section {
         padding: 20px;
+    }
+
+    .description {
+        width: 90%;
     }
 
 }

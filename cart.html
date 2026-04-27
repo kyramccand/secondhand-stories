@@ -11,38 +11,43 @@
 
     <style>
         .cart-container {
-            max-width: 700px;
+            width: 700px;
             margin: 40px auto;
             background: white;
             border-radius: 20px;
             padding: 30px 35px;
             margin-bottom: 30px;
-        }
-
-        .cart-container h1 {
-            text-align: center;
-            color: #1B4332;
-            font-size: 32px;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        h1 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
         }
 
-        p {
-            text-align: center;
+        .price-x-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
         }
+
+        @media (max-width: 768px) {
+            .cart-container {
+                width: 90%;
+            }
+
+        }
+
     </style>
 </head>
 <body>
     <div class="content">
+        <div class="page-center-container">
         <h1>Cart</h1>
-        <p>Finalizing your collection... you're just a few clicks away from owning these books!</p>
-
+        <p class="description">Finalizing your collection... you're just a few clicks away from owning these books!</p>
         <div class="cart-container">
-            <h1>Order Summary</h1>
+            <h2>Order Summary</h2>
 
             <!-- books in cart -->
             <div id="cartItemsList" class="cart-items"></div>
@@ -69,20 +74,21 @@
                     <span>Total:</span>
                     <span id="totalValue">$0.00</span>
                 </div>
+                <br>
+                <div class="apply-credits-checkbox">
+                    Would you like to apply your credits to this purchase? 
+                    <input type="checkbox" id="credCheck" onclick="applyCreds()">
+                </div>
             </div>
 
-            <br>
-
-            <div class="applyCredCheckbox">
-                Would you like to apply your credits to this purchase? 
-                <input type="checkbox" id="credCheck" onclick="applyCreds()">
-            </div>
+            
 
             <div class="btn-group">
                 <button onclick="clearCart()" class="clear-btn" id="clearCartBtn">Clear Cart</button>
                 <button onclick="handleCheckout()" class="checkout-btn" id="checkoutBtn">Checkout</button>
             </div>
             <br>
+        </div>
     </div>
 
     <script>
@@ -142,12 +148,16 @@
                 booksHTML += `
                     <div class="cart-item">
                         <div class="book-details">
-                            <div class="book-title">${title}</div>
-                            <div class="book-author">by ${author}</div>
-                        </div>
-                        <div>$5</div>
-                        <div>
-                            <button onclick="removeItem(${i})" class="remove-btn"><i class="fa-solid fa-x"></i></i></button>
+                            <div>
+                                <div class="book-title">${title}</div>
+                                <div class="book-author">by ${author}</div>
+                            </div>
+                            <div class="price-x-container">
+                                <div>$5</div>
+                                <div>
+                                    <button onclick="removeItem(${i})" class="remove-btn"><i class="fa-solid fa-x"></i></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;

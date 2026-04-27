@@ -26,19 +26,14 @@
             text-align: center;
             margin-bottom: 6px;
         }
-        .header h1 {
-            font-size: 32px;
-            font-weight: 900;
-            color: #000000;
-            margin-bottom: 12px;
-        }
         
         .header p {
-            font-size: 19px;
+            font-size: 18px;
             color: #000000;
-            max-width: 540px;
+            width: 70%;
             margin: 0 auto;
-            margin-bottom: 24px;
+            margin-top: 20px;
+            margin-bottom: 40px;
             
         }
         .search-bar {
@@ -153,23 +148,16 @@
             margin-bottom: 6px;
         }
         .book-meta {
-            font-size: 13px;
-            color: #1B4332;
-            line-height: 1.6;
+            font-size: 16px;
+            color: #000000;
         }
+
         .book-meta strong { 
-            color: #1a2e1a; 
+            color: #000000;
         }
-        .details-btn {
-            background: #FFB703;
-            color: #1a2e1a;
-            font-weight: 700;
-            font-size: 13px;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            width: fit-content;
-            align-self: center;
+
+        h4 {
+            margin-bottom: 10px;
         }
         
         .wrap {
@@ -194,6 +182,10 @@
                 grid-template-columns: minmax(0, 300px);
                 justify-content: center;
             }
+
+            .header p {
+                width: 90%;
+            }
         }
 
         @media (max-width: 100px) {
@@ -209,7 +201,7 @@
     <div class="wrap">
         <div class="header">
             <h1>Catalog</h1>
-            <p>Browse our collection of affordable, secondhand books. 
+            <p class="description">Browse our collection of affordable, secondhand books. 
                 Each book was donated from a user or sourced from a closing 
                 library. Find your next read and give a book a new home.</p>
         </div>
@@ -260,7 +252,7 @@
                 <div class="book-card">
                     <img class="book-cover" src="${coverSrc}" alt="${book.title}">
                     <div class="book-info">
-                        <div class="book-title">${book.title}</div>
+                        <h4>${book.title}</h4>
                         <div class="book-meta">
                             <strong>Author</strong>: ${book.author}<br>
                             <strong>Published</strong>: ${book.year}<br>
@@ -268,7 +260,7 @@
                         </div>
                     </div>
                     <a href="see-details?id=${book._id}" style="align-self: center; text-decoration: none;">
-                        <button class="details-btn">See details</button>
+                        <button>See details</button>
                     </a>
                 </div>
             `;
