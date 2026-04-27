@@ -261,6 +261,26 @@ var server = http.createServer(function (req, res) {
         }
     })();
     }
+    else if (path == "/processCheckOut" && req.method == "GET") {
+        (async () => {
+            const totalItems = urlObj.query.totalItems;
+
+            // NOTE: this is the stripe checkout blueprint, provided by stripe
+            const stripe = require('stripe')('sk_test_51TQgpnJCbaB2R6Vgq3VCznggWkj39qLx8Seu1XRdeqNDNtK5i4smae3uaLwcB1OzYgiXLsCwekkd1VZBONmWsxVm00e6gfZSS0');
+
+            const session = await stripe.checkout.sessions.create({
+              line_items: [
+                {
+                  price: '5000',
+                  quantity: totalItems,
+                },
+              ],
+              mode: 'payment',
+              success_url: 'https://dashboard.stripe.com/workbench/blueprints/one-time-payment/checkout-chapter?confirmation-redirect=create-checkout-session',
+              cancel_url: 'https://dashboard.stripe.com/workbench/blueprints/one-time-payment/checkout-chapter?confirmation-redirect=create-checkout-session',
+            });
+        })();
+    }
     // Load the home page
     else if (path == "/catalog") {
         (async () => {
