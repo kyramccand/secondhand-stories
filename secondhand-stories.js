@@ -269,10 +269,17 @@ var server = http.createServer(function (req, res) {
             const stripe = require('stripe')('sk_test_51TQgpnJCbaB2R6Vgq3VCznggWkj39qLx8Seu1XRdeqNDNtK5i4smae3uaLwcB1OzYgiXLsCwekkd1VZBONmWsxVm00e6gfZSS0');
 
             const session = await stripe.checkout.sessions.create({
-              line_items: [
+                line_items: [
                 {
-                  price: 500,
-                  quantity: totalItems,
+                    default_price_data: {
+                        currency: 'usd',
+                        unit_amount: 500,
+                        product_data: {
+                            name: 'book',
+                            description: 'Enjoy your read!',
+                        },
+                    },
+                    quantity: totalItems,
                 },
               ],
               mode: 'payment',

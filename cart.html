@@ -362,8 +362,8 @@
             displayCart();
 
             await fetch(`/processCheckout?totalItems=${encodeURIComponent(itemCount)}`);
-            const stripePage = await response.json();
-            window.location.href() = stripePage.url;
+            const stripePage = await stripeResponse.json();
+            window.location.href = stripePage.stripeURL;
         }
         
         // render on page load
