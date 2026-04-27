@@ -271,7 +271,7 @@ var server = http.createServer(function (req, res) {
             const session = await stripe.checkout.sessions.create({
                 line_items: [
                 {
-                    default_price_data: {
+                    price_data: {
                         currency: 'usd',
                         unit_amount: 500,
                         product_data: {
