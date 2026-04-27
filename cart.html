@@ -357,12 +357,15 @@
                 await fetch(`/useCredit?${userDonations.toString()}`);
             }
 
+            const stored = localStorage.getItem('shoppingCart');
+            const items = cart.items;
+
             // remove purchased books from collection
             for (let i = 0; i < items.length; i++) {
                 const book = items[i];
                 const title = book.title;
 
-                fetch(`/updateLibrary?title=${encodeURIComponent(title)}`);
+                await fetch(`/updateLibrary?title=${encodeURIComponent(title)}`);
             }
         
             alert("Proceeding to checkout! Thank you for shopping with us!");
