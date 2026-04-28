@@ -202,7 +202,7 @@ var server = http.createServer(function (req, res) {
                 const user = await collection.findOne({ email });
 
                 res.writeHead(200, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({ donations: user.donations }));
+                res.end(JSON.stringify({ credits: user.credits || 0}));
 
             } catch (error) {
                 res.writeHead(500, { "Content-Type": "application/json" });
