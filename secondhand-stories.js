@@ -5,6 +5,7 @@ const querystring = require("querystring");
 var port = process.env.PORT || 3000;
 // var port = 8080;   // uncomment to run local
 
+const { ObjectId } = require("mongodb");
 const MongoClient = require("mongodb").MongoClient;
 const connStr =
   "mongodb+srv://login_user:db123@leaderboard.gw09mzd.mongodb.net/?appName=leaderboard";
@@ -301,7 +302,7 @@ var server = http.createServer(function (req, res) {
                 res.end(JSON.stringify({stripeURL: session.url}));
             } catch (error) {
                 res.writeHead(500, { "Content-Type": "application/json" });
-                res.end(res.end(JSON.stringify({ error: error.message })));
+                res.end(JSON.stringify({ error: error.message }));
             }
         })();
     }
@@ -493,7 +494,7 @@ var server = http.createServer(function (req, res) {
       const isbn = formData.isbn;
       const email = formData.email;
 
-      apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA`;
+      const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=AIzaSyAhyo9Gmq82G1N8vJWwaBITJNK0yxOH-wA`;
 
       const response = await fetch(apiUrl);
       const data = await response.json();
@@ -581,7 +582,6 @@ var server = http.createServer(function (req, res) {
   } else if (path == "/see-details") {
     (async () => {
       const bookId = urlObj.query.id;
-      const { ObjectId } = require("mongodb");
       const client = new MongoClient(connStr);
 
       try {

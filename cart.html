@@ -112,8 +112,8 @@
             fetch(`/creditInfo?email=${encodeURIComponent(storedEmail)}`)
                 .then(res => res.json())
                 .then(user => {
-                    document.getElementById("donations").innerText = "-$" + user.donations * 5;
-                    availableCredits = user.donations * 5;
+                    document.getElementById("donations").innerText = "-$" + user.credits * 5;
+                    availableCredits = user.credits * 5;
             });
 
             // set box as unticked, this is mostly for reload on clearing, 
@@ -265,7 +265,7 @@
             // convert $ discount back to credit/donation units and update user db with new credit total
             if (usedCredits > 0) {
                 availableCredits = availableCredits / 5;
-                const userDonations = new URLSearchParams({ email: storedEmail, donations: availableCredits });
+                const userDonations = new URLSearchParams({ email: storedEmail, credits: availableCredits });
 
                 await fetch(`/useCredit?${userDonations.toString()}`);
             }
