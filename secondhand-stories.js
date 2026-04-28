@@ -227,7 +227,6 @@ var server = http.createServer(function (req, res) {
 
                 const user = await collection.findOne({ email });
 
-                await collection.updateOne({ email: email }, { $set: {donations: donations}});
                 await collection.updateOne({ email: email }, { $set: {credits: donations}});
 
                 res.writeHead(200, { "Content-Type": "application/json" });
