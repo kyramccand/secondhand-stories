@@ -131,6 +131,7 @@ var server = http.createServer(function (req, res) {
         email: formData.email,
         password: formData.password,
         donations: 0, // New users have 0 donations
+        credits: 0
       };
       // Connect to MongoDB
       const client = new MongoClient(connStr);
@@ -271,42 +272,46 @@ var server = http.createServer(function (req, res) {
     })();
     }
     // process the checkout via stripe
-    else if (path == "/processCheckout" && req.method == "GET") {
-        (async () => {
-            try {
-                const totalItems = parseInt(urlObj.query.totalItems);
+else if (path == "/processCheckout" && req.method == "GET") {
+    (async () => {
+        try {
+            const totalItems = parseInt(urlObj.query.totalItems);
+            // Get the price from the frontend and convert to cents
+            const finalPrice = parseFloat(urlObj.query.finalPrice);
+            const amountInCents = Math.round(finalPrice * 100);
 
-                // NOTE: this is the stripe checkout blueprint, provided by stripe (they do price in cents for some reason)
-                const session = await stripe.checkout.sessions.create({
-                    line_items: [
-                    {
-                        price_data: {
-                            currency: 'usd',
-                            unit_amount: 500,
-                            product_data: {
-                                name: 'book',
-                                description: 'Enjoy your read!',
-                            },
+            // NOTE: this is the stripe checkout blueprint, provided by stripe (they do price in cents for some reason)
+            const session = await stripe.checkout.sessions.create({
+                line_items: [
+                {
+                    price_data: {
+                        currency: 'usd',
+                        // Calculate unit_amount based on the total price divided by items
+                        unit_amount: Math.round(amountInCents / totalItems),
+                        product_data: {
+                            name: 'book',
+                            description: 'Enjoy your read!',
                         },
-                        quantity: totalItems,
                     },
-                  ],
-                  mode: 'payment',
+                    quantity: totalItems,
+                },
+              ],
+              mode: 'payment',
 
-                  // landing pages for after payment
-                  success_url: 'https://my-vers-secondhand-stories-030008331aee.herokuapp.com/home',
-                  cancel_url: 'https://my-vers-secondhand-stories-030008331aee.herokuapp.com/cart',
-                });
+              // landing pages for after payment
+              success_url: 'https://secondhand-stories-eb69447276fa.herokuapp.com/home',
+              cancel_url: 'https://secondhand-stories-eb69447276fa.herokuapp.com/cart',
+            });
 
-                // return the unique checkout link stripe creates for each purchase (auto loaded in front end)
-                res.writeHead(200, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({stripeURL: session.url}));
-            } catch (error) {
-                res.writeHead(500, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({ error: error.message }));
-            }
-        })();
-    }
+            // return the unique checkout link stripe creates for each purchase (auto loaded in front end)
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({stripeURL: session.url}));
+        } catch (error) {
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: error.message }));
+        }
+    })();
+}
   // Load the home page
   else if (path == "/catalog") {
     (async () => {

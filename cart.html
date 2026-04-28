@@ -264,8 +264,9 @@
 
             // convert $ discount back to credit/donation units and update user db with new credit total
             if (usedCredits > 0) {
-                availableCredits = availableCredits / 5;
-                const userDonations = new URLSearchParams({ email: storedEmail, credits: availableCredits });
+                // Calculate remaining credits (availableCredits is already the dollar value, so / 5)
+                const remainingCredits = availableCredits / 5;
+                const userDonations = new URLSearchParams({ email: storedEmail, donations: remainingCredits });
 
                 await fetch(`/useCredit?${userDonations.toString()}`);
             }
@@ -285,10 +286,20 @@
             const emptyCart = { items: [] };
             localStorage.setItem('shoppingCart', JSON.stringify(emptyCart));
 
-            // load stripe checkout
-            const stripeResponse = await fetch(`/processCheckout?totalItems=${encodeURIComponent(itemCount)}`);
+            // load stripe checkout by passing final price
+            const stripeParams = new URLSearchParams({ 
+                totalItems: itemCount, 
+                finalPrice: totalUnformatted.toFixed(2) 
+            });
+            
+            const stripeResponse = await fetch(`/processCheckout?${stripeParams.toString()}`);
             const stripePage = await stripeResponse.json();
-            window.location.href = stripePage.stripeURL;
+            
+            if (stripePage.stripeURL) {
+                window.location.href = stripePage.stripeURL;
+            } else {
+                alert("Error creating Stripe session.");
+            }
         }
         
         // render on page load
