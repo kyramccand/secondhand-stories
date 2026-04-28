@@ -2,6 +2,7 @@ var http = require("http");
 var url = require("url");
 var fs = require("fs");
 const querystring = require("querystring");
+const stripe = require('stripe')('sk_test_51TQgpnJCbaB2R6Vgq3VCznggWkj39qLx8Seu1XRdeqNDNtK5i4smae3uaLwcB1OzYgiXLsCwekkd1VZBONmWsxVm00e6gfZSS0');
 var port = process.env.PORT || 3000;
 // var port = 8080;   // uncomment to run local
 
